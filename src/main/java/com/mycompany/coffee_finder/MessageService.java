@@ -1,6 +1,6 @@
-package com.mycompany.sample_maven_web_app;
+package com.mycompany.coffee_finder;
 
-import static com.mycompany.sample_maven_web_app.UserService.logger;
+import static com.mycompany.coffee_finder.UserService.logger;
 import data.Model;
 import java.io.IOException;
 import java.sql.SQLException;
