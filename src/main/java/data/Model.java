@@ -189,20 +189,19 @@ public class Model {
         }
         return ll.toArray(new CoffeeShop[ll.size()]);
     }
-    /*
-    public boolean updateUser(User usr) throws SQLException
+    
+    public boolean updateShop(CoffeeShop shop) throws SQLException
     {
         StringBuilder sqlQuery = new StringBuilder();
-        sqlQuery.append("update users ");
-        sqlQuery.append("set username='" + usr.getUsername() + "', ");
-        sqlQuery.append("email='" + usr.getEmail() + "', ");
-        sqlQuery.append("password='" + usr.getPassword() + "' ");
-        sqlQuery.append("where userid=" + usr.getUserId() + ";");
+        sqlQuery.append("update shops ");
+        sqlQuery.append("set shopname='" + shop.getMyshopname()+ "', ");
+        sqlQuery.append("shopaddress='" + shop.getMyaddress()+ "', ");
+        sqlQuery.append("shopphone='" + shop.getMyphone()+ "' ");
+        sqlQuery.append("where shopid=" + shop.getMyshopId()+ ";");
         Statement st = createStatement();
         logger.log(Level.INFO, "UPDATE SQL=" + sqlQuery.toString());
         return st.execute(sqlQuery.toString());
     }
-    */
     
     
    public int newMessage(Messages msg) throws SQLException

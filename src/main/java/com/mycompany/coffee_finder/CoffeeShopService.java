@@ -72,7 +72,7 @@ public class CoffeeShopService {
      * PUT method for updating or creating an instance of GenericResource
      * @param content representation for the resource
      */
-  /*  @PUT
+    @PUT
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
     public String updateUser(String jobj) throws IOException
@@ -82,8 +82,8 @@ public class CoffeeShopService {
         StringBuilder text = new StringBuilder();
         try {
             Model db = Model.singleton();
-            int shopid = shop.getShopId();
-          //  db.updateCoffeeShop(shop);
+            int shopid = shop.getMyshopId();
+            db.updateShop(shop);
             logger.log(Level.INFO, "update shop with shopid=" + shopid);
             text.append("Coffee Shop id updated with shop id=" + shopid + "\n");
         }
@@ -129,7 +129,7 @@ public class CoffeeShopService {
         }
         return text.toString();
     }
-    */
+   
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
