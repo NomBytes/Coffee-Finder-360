@@ -32,7 +32,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 @Path("shops")
 public class CoffeeShopService {
 
-    static final Logger logger = Logger.getLogger(UserService.class.getName());
+    static final Logger logger = Logger.getLogger(CoffeeShopService.class.getName());
     
     @Context
     private UriInfo context;
@@ -72,7 +72,7 @@ public class CoffeeShopService {
      * PUT method for updating or creating an instance of GenericResource
      * @param content representation for the resource
      */
-    @PUT
+  /*  @PUT
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
     public String updateUser(String jobj) throws IOException
@@ -129,7 +129,7 @@ public class CoffeeShopService {
         }
         return text.toString();
     }
-    
+    */
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
