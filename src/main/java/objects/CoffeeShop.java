@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public class CoffeeShop {
 	
-        private int myShopId;
+
 
         
 	/* The name of the shop */
@@ -21,6 +21,7 @@ public class CoffeeShop {
         
         private String myPhone;
 	
+        private int myShopId;
 	/* The reviews for the shop */
 //	private ArrayList<Review> myReviews;
 	
@@ -38,22 +39,24 @@ public class CoffeeShop {
 	
         
         public CoffeeShop() {
-            
+            myShopId = 1;
         }
 	/**
 	 * Constructs a new coffee shop given the name and address.
 	 * @param theName The name of the coffee shop
 	 * @param theAddress The location of the coffee shop
 	 */
-//	public CoffeeShop(String theName, String theAddress) {
-//		myShopName = theName;
-//		myAddress = theAddress;
+	public CoffeeShop(String theName, String theAddress, String thePhone) {
+		myShopName = theName;
+		myAddress = theAddress;
+                myPhone = thePhone;
+                myShopId = 1;
 //		myReviews = new ArrayList<Review>();
 //		myCoffeeAvg = 0.0;
 //		myBurritoAvg = 0.0;
 //		myDollarAvg = 0.0;
 //		myTags = new ArrayList<String>();
-//	}
+	}
 
 	
         public int getShopId() {
