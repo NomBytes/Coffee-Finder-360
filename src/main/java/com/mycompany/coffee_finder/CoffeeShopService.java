@@ -135,7 +135,7 @@ public class CoffeeShopService {
     @Consumes(MediaType.APPLICATION_JSON)
     public String createUser(String jobj) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        User user = mapper.readValue(jobj.toString(), User.class);
+        CoffeeShop shop = mapper.readValue(jobj.toString(), CoffeeShop.class);
         
         
         StringBuilder text = new StringBuilder();
@@ -149,9 +149,9 @@ public class CoffeeShopService {
         */
         try {
             Model db = Model.singleton();
-            int userid = db.newUser(user);
-            logger.log(Level.INFO, "user persisted to db as userid=" + userid);
-            text.append("User id persisted with id=" + userid);
+            int shopid = db.newShop(shop);
+            logger.log(Level.INFO, "shop persisted to db as shopid=" + shopid);
+            text.append("Shop id persisted with id=" + shopid);
         }
         catch (SQLException sqle)
         {

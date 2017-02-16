@@ -19,7 +19,6 @@ public class CoffeeShop {
 	/* The address of the shop */
 	private String myAddress;
         
-        
         private String myPhone;
 	
 	/* The reviews for the shop */
