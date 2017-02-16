@@ -104,17 +104,17 @@ public class CoffeeShopService {
     @DELETE
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
-    public String deleteUser(String jobj) throws IOException
+    public String deleteShop(String jobj) throws IOException
     {
         ObjectMapper mapper = new ObjectMapper();
-        User user = mapper.readValue(jobj.toString(), User.class);
+        CoffeeShop shop = mapper.readValue(jobj.toString(), CoffeeShop.class);
         StringBuilder text = new StringBuilder();
         try {
             Model db = Model.singleton();
-            int userid = user.getUserId();
-            db.deleteUser(userid);
-            logger.log(Level.INFO, "user deleted from db=" + userid);
-            text.append("User id deleted with id=" + userid);
+            int shopid = shop.getMyshopId();
+            db.deleteShop(shopid);
+            logger.log(Level.INFO, "shop deleted from db=" + shopid);
+            text.append("Shop id deleted with id=" + shopid);
         }
         catch (SQLException sqle)
         {

@@ -161,14 +161,14 @@ public class Model {
         logger.log(Level.INFO, "The new shop id=" + shopid);
         return shopid;
     }
-    /*
-    public void deleteUser(int userid) throws SQLException
+    
+    public void deleteShop(int userid) throws SQLException
     {
         String sqlDelete="delete from users where userid=?";
         PreparedStatement pst = createPreparedStatement(sqlDelete);
         pst.setInt(1, userid);
         pst.execute();
-    } */
+    } 
     
     public CoffeeShop[] getShops() throws SQLException
     {
