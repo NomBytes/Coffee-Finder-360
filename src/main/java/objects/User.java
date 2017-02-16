@@ -6,10 +6,19 @@
  * @author nombi
  *
  */
+package objects;
+
 public class User {
+        /** The Username. **/
 	private String username;
+        
+        /** The Email. **/
 	private String email;
+        
+        /** The Password. */
 	private String password;
+        
+        /** The User ID. */
 	private int userId;
 	
 	public void user(String username, String email, String password){

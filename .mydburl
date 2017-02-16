@@ -1,4 +1,4 @@
 Connection info string:
-   "dbname=de3lak4cr6d1t1 host=ec2-54-235-204-221.compute-1.amazonaws.com port=5432 user=hodqsszaaoqymh password=f91d2522f881436922ced3091ae4dc5ebced7bb45ee036bb690b8712445e4944 sslmode=require"
+   "dbname=d6q9j0ee835ij8 host=ec2-23-23-186-157.compute-1.amazonaws.com port=5432 user=pdsaxjjpyxkgtt password=623e0d9772eb7e5b49988c19e1915ffe495ae11a46f4bd442f285539ff61f578 sslmode=require"
 Connection URL:
-   postgres://hodqsszaaoqymh:f91d2522f881436922ced3091ae4dc5ebced7bb45ee036bb690b8712445e4944@ec2-54-235-204-221.compute-1.amazonaws.com:5432/de3lak4cr6d1t1
+   postgres://pdsaxjjpyxkgtt:623e0d9772eb7e5b49988c19e1915ffe495ae11a46f4bd442f285539ff61f578@ec2-23-23-186-157.compute-1.amazonaws.com:5432/d6q9j0ee835ij8
