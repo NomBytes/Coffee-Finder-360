@@ -14,19 +14,19 @@ package objects;
 public class CoffeeShop {
 
 	/* The name of the shop */
-	private String myShopName;
+	private String myshopname;
 	
 	/* The address of the shop */
-	private String myAddress;
+	private String myaddress;
         
-        private String myPhone;
+        private String myphone;
 	
-        private int myShopId;
+        private int myshopId;
 
 	
         
         public CoffeeShop() {
-            myShopId = 1;
+            myshopId = 1;
         }
         
 	/**
@@ -35,46 +35,46 @@ public class CoffeeShop {
 	 * @param theAddress The location of the coffee shop
          * @param thePhone The shop phone number.
 	 */
-	public CoffeeShop(String theName, String theAddress, String thePhone) {
-		myShopName = theName;
-		myAddress = theAddress;
-                myPhone = thePhone;
-                myShopId = 1;
+	public CoffeeShop(String myshopname, String myaddress, String myphone) {
+		this.myshopname = myshopname;
+		this.myaddress = myaddress;
+                this.myphone = myphone;
+                myshopId = 1;
 
 	}
 
 	
         public int getShopId() {
-            return this.myShopId;
+            return myshopId;
         }
 
         public void setShopId(int theShopId) {
-            this.myShopId = theShopId;
+            this.myshopId = theShopId;
         }
  
 	
 	public String getShopName() {
-		return this.myShopName;
+		return this.myshopname;
 	}
         
         public void setShopName(String theShopName) {
-            this.myShopName = theShopName;
+            this.myshopname = theShopName;
         }
 	
 	public String getAddress() {
-		return myAddress;
+		return myaddress;
 	}
         
         public void setAddress(String theAddress) {
-            this.myAddress = theAddress;
+            this.myaddress = theAddress;
         }
 	
         public String getPhone() {
-            return myPhone;
+            return myphone;
         }
         
         public void setPhone(String thePhone) {
-            this.myPhone = thePhone;
+            this.myphone = thePhone;
         }
 
 }
