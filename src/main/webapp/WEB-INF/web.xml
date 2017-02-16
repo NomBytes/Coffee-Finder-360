@@ -8,7 +8,7 @@
         </servlet-class>
         <init-param>
             <param-name>jersey.config.server.provider.packages</param-name>
-            <param-value>com.mycompany.sample_maven_web_app</param-value>
+            <param-value>com.mycompany.coffee_finder</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>

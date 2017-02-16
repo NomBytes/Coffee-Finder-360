@@ -1,4 +1,4 @@
-package tcss360;
+package objects;
 
 import java.util.ArrayList;
 
@@ -11,28 +11,67 @@ import java.util.ArrayList;
 public class Review {
 	
 	/* The user who submitted the review */
-	private String myUsername;
+	private int myUserId;
+        
+        /* The ID of the coffee shop that this review is for. */
+        private int myShopId;
 	
 	/* The coffee score */
 	private int myCoffeeScore;
 	
 	/* The burrito score */
 	private int myBurritoScore;
-	
-	/* The Dollar score */
+
+    public void setMyUserId(int myUserId) {
+        this.myUserId = myUserId;
+    }
+
+    public void setMyShopId(int myShopId) {
+        this.myShopId = myShopId;
+    }
+
+    public void setMyCoffeeScore(int myCoffeeScore) {
+        this.myCoffeeScore = myCoffeeScore;
+    }
+
+    public void setMyBurritoScore(int myBurritoScore) {
+        this.myBurritoScore = myBurritoScore;
+    }
+
+    public void setMyDollarScore(int myDollarScore) {
+        this.myDollarScore = myDollarScore;
+    }
+
+    public void setMyTags(ArrayList<String> myTags) {
+        this.myTags = myTags;
+    }
+
+    public void setMyReview(String myReview) {
+        this.myReview = myReview;
+    }
+
+    public void setMyHelpful(int myHelpful) {
+        this.myHelpful = myHelpful;
+    }
+
+    /* The Dollar score */
+    public void setMyUnhelpful(int myUnhelpful) {
+        this.myUnhelpful = myUnhelpful;
+    }
+
 	private int myDollarScore;
-	
+
 	/* The Tags used in the review */
 	private ArrayList<String> myTags;
 	
-	/* The comments within the review */
+	/* The review text. */
 	private String myReview;
 	
-	/* The users who think the review was helpful */
-	private ArrayList<String> myHelpful;
+	/* The number of users who think the review was helpful */
+	private int myHelpful;
 	
-	/* The users who think the review was unhelpful */
-	private ArrayList<String> myUnhelpful;
+	/* The number of users who think the review was unhelpful */
+	private int myUnhelpful;
 	
 	/**
 	 * Creates a new review for a given coffee shop.
@@ -43,9 +82,10 @@ public class Review {
 	 * @param theTags The tags given by the user.
 	 * @param theReview The contents of the review.
 	 */
-	public Review(String theUser, int theCoffee, int theBurrito, int theDollar, 
+	public Review(int theUserId, int theShopId, int theCoffee, int theBurrito, int theDollar, 
 			      ArrayList<String> theTags, String theReview) {
-		myUsername = theUser;
+		myUserId = theUserId;
+                myShopId = theShopId;
 		myCoffeeScore = theCoffee;
 		myBurritoScore = theBurrito;
 		myDollarScore = theDollar;
@@ -54,11 +94,19 @@ public class Review {
 	}
 	
 	/**
-	 * Retrieves the username of the review's author.
-	 * @return the username of the reviewer
+	 * Retrieves the user ID of the review's author.
+	 * @return the user ID of the reviewer
 	 */
-	public String getUser() {
-		return myUsername;
+	public int getUserId() {
+		return myUserId;
+	}
+        
+        /**
+	 * Retrieves the shop ID that the user is reviewing.
+	 * @return the shop ID of the shop being reviewed.
+	 */
+	public int getUser() {
+		return myUserId;
 	}
 	
 	/**
@@ -123,7 +171,7 @@ public class Review {
 	 * @return number of helpful ratings
 	 */
 	public int getNumHelpful() {
-		return myHelpful.size();
+		return myHelpful;
 	}
 	
 	/**
@@ -131,6 +179,6 @@ public class Review {
 	 * @return number of unhelpful ratings
 	 */
 	public int getNumUnhelpful() {
-		return myUnhelpful.size();
+		return myUnhelpful;
 	}
 }
