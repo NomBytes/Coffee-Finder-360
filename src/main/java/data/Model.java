@@ -14,13 +14,14 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import objects.CoffeeShop;
 import objects.Messages;
 import objects.User;
 import objects.Review;
 
 /**
  *
- * @author wlloyd
+ * @author wingoz
  */
 public class Model {
     static final Logger logger = Logger.getLogger(Model.class.getName());
@@ -142,53 +143,53 @@ public class Model {
         logger.log(Level.INFO, "UPDATE SQL=" + sqlQuery.toString());
         return st.execute(sqlQuery.toString());
     }
+   
     
-   /* 
     
-    public int newReview(Review rev) throws SQLException
+    public int newShop(CoffeeShop shop) throws SQLException
     {
-        String sqlInsert="insert into reviews (userid, shopid, burritoscore, dollarscore, review, helpfulcount, unhelpfulcount, dateadded) values ('" + rev.getUserId()+ "', '" + rev.get "'" + usr.getEmail() + "', '" + usr.Password() + "');";
+        String sqlInsert="insert into shops (shopname, shopaddress, shopphone) values ('" + shop.getShopName() + "', '" + shop.getAddress() + "', '" + shop.getPhone() + "');";
         Statement s = createStatement();
         logger.log(Level.INFO, "attempting statement execute");
         s.execute(sqlInsert,Statement.RETURN_GENERATED_KEYS);
         logger.log(Level.INFO, "statement executed.  atempting get generated keys");
         ResultSet rs = s.getGeneratedKeys();
         logger.log(Level.INFO, "retrieved keys from statement");
-        int userid = -1;
+        int shopid = -1;
         while (rs.next())
-            userid = rs.getInt(3);   // assuming 3rd column is userid
-        logger.log(Level.INFO, "The new user id=" + userid);
-        return userid;
+            shopid = rs.getInt(1);   // assuming 1rd column is userid
+        logger.log(Level.INFO, "The new shop id=" + shopid);
+        return shopid;
     }
-    
+    /*
     public void deleteUser(int userid) throws SQLException
     {
         String sqlDelete="delete from users where userid=?";
         PreparedStatement pst = createPreparedStatement(sqlDelete);
         pst.setInt(1, userid);
         pst.execute();
-    }
+    } */
     
-    public User[] getUsers() throws SQLException
+    public CoffeeShop[] getShops() throws SQLException
     {
-        LinkedList<User> ll = new LinkedList<User>();
-        String sqlQuery ="select * from users;";
+        LinkedList<CoffeeShop> ll = new LinkedList<CoffeeShop>();
+        String sqlQuery ="select * from shops;";
         Statement st = createStatement();
         ResultSet rows = st.executeQuery(sqlQuery);
         while (rows.next())
         {
             logger.log(Level.INFO, "Reading row...");
-            User usr = new User();
-            usr.setUsername(rows.getString("username"));
-            usr.setEmail(rows.getString("email"));
-            usr.setPassword(rows.getString("password"));
-            usr.setUserId(rows.getInt("userid"));
-            logger.log(Level.INFO, "Adding user to list with id=" + usr.getUserId());
-            ll.add(usr);
+            CoffeeShop shop = new CoffeeShop();
+            shop.setShopName(rows.getString("shopname"));
+            shop.setAddress(rows.getString("shopaddress"));
+            shop.setPhone(rows.getString("shopphone"));
+            shop.setShopId(rows.getInt("shopid"));
+            logger.log(Level.INFO, "Adding user to list with id=" + shop.getShopId());
+            ll.add(shop);
         }
-        return ll.toArray(new User[ll.size()]);
+        return ll.toArray(new CoffeeShop[ll.size()]);
     }
-    
+    /*
     public boolean updateUser(User usr) throws SQLException
     {
         StringBuilder sqlQuery = new StringBuilder();

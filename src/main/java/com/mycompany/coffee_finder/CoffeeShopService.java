@@ -6,30 +6,31 @@
 package com.mycompany.coffee_finder;
 
 import data.Model;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.Produces;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PUT;
-import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriInfo;
+import objects.CoffeeShop;
 import objects.User;
 import org.codehaus.jackson.map.ObjectMapper;
 
 /**
  * REST Web Service
  *
- * @author wingoz
+ * @author wlloyd
  */
-@Path("users")
-public class UserService {
+@Path("shops")
+public class CoffeeShopService {
 
     static final Logger logger = Logger.getLogger(UserService.class.getName());
     
@@ -39,7 +40,7 @@ public class UserService {
     /**
      * Creates a new instance of GenericResource
      */
-    public UserService() {
+    public CoffeeShopService() {
     }
 
     /**
@@ -48,16 +49,16 @@ public class UserService {
      */
     @GET
     @Produces(MediaType.TEXT_HTML)
-    public String getUsers() {
+    public String getShops() {
         //TODO return proper representation object
         StringBuilder sb = new StringBuilder();
-        sb.append("<html><body><style>table, th, td {font-family:Arial,Verdana,sans-serif;font-size:16px;padding: 0px;border-spacing: 0px;}</style><b>USERS LIST:</b><br><br><table cellpadding=10 border=1><tr><td>Username</td><td>Email</td><td>Password</td><td>ID</td></tr>");
+        sb.append("<html><body><style>table, th, td {font-family:Arial,Verdana,sans-serif;font-size:16px;padding: 0px;border-spacing: 0px;}</style><b>USERS LIST:</b><br><br><table cellpadding=10 border=1><tr><td>ID</td><td>Name</td><td>Address</td><td>Phone</td></tr>");
         try
         {
             Model db = Model.singleton();
-            User[] users = db.getUsers();
-            for (int i=0;i<users.length;i++)
-                sb.append("<tr><td>" + users[i].getUsername() + "</td><td>" + users[i].getEmail() + "</td><td>" + users[i].getPassword() + "</td><td>" + users[i].getUserId() + "</td></tr>");
+            CoffeeShop[] shops = db.getShops();
+            for (int i=0;i<shops.length;i++)
+                sb.append("<tr><td>" + shops[i].getShopId()+ "</td><td>" + shops[i].getShopName() + "</td><td>" + shops[i].getAddress() + "</td><td>" + shops[i].getPhone()+ "</td></tr>");
         }
         catch (Exception e)
         {
@@ -77,14 +78,14 @@ public class UserService {
     public String updateUser(String jobj) throws IOException
     {
         ObjectMapper mapper = new ObjectMapper();
-        User user = mapper.readValue(jobj.toString(), User.class);
+        CoffeeShop shop = mapper.readValue(jobj.toString(), CoffeeShop.class);
         StringBuilder text = new StringBuilder();
         try {
             Model db = Model.singleton();
-            int userid = user.getUserId();
-            db.updateUser(user);
-            logger.log(Level.INFO, "update user with userid=" + userid);
-            text.append("User id updated with user id=" + userid + "\n");
+            int shopid = shop.getShopId();
+          //  db.updateCoffeeShop(shop);
+            logger.log(Level.INFO, "update shop with shopid=" + shopid);
+            text.append("Coffee Shop id updated with shop id=" + shopid + "\n");
         }
         catch (SQLException sqle)
         {
@@ -167,4 +168,3 @@ public class UserService {
         return text.toString();
     }
 }
-

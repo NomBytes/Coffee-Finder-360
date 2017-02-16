@@ -10,11 +10,17 @@ import java.util.ArrayList;
  */
 public class CoffeeShop {
 	
+        private int myShopId;
+
+        
 	/* The name of the shop */
 	private String myShopName;
 	
 	/* The address of the shop */
 	private String myAddress;
+        
+        
+        private String myPhone;
 	
 	/* The reviews for the shop */
 	private ArrayList<Review> myReviews;
@@ -31,6 +37,10 @@ public class CoffeeShop {
 	/* The tags that are associated with the shop */
 	private ArrayList<String> myTags;
 	
+        
+        public CoffeeShop() {
+            
+        }
 	/**
 	 * Constructs a new coffee shop given the name and address.
 	 * @param theName The name of the coffee shop
@@ -47,6 +57,14 @@ public class CoffeeShop {
 	}
 
 	
+        public int getShopId() {
+            return myShopId;
+        }
+
+        public void setShopId(int theShopId) {
+            this.myShopId = theShopId;
+        }
+    
 	/**
 	 * Retrieves the tags associated with the coffee shop.
 	 * @return The tags associated with the coffee shop.
@@ -79,11 +97,26 @@ public class CoffeeShop {
 	public String getShopName() {
 		return myShopName;
 	}
+        
+        public void setShopName(String theShopName) {
+            myShopName = theShopName;
+        }
 	
 	public String getAddress() {
 		return myAddress;
 	}
+        
+        public void setAddress(String theAddress) {
+            myAddress = theAddress;
+        }
 	
+        public String getPhone() {
+            return myPhone;
+        }
+        
+        public void setPhone(String thePhone) {
+            myPhone = thePhone;
+        }
 	public double getCoffeeAvg() {
 		return myCoffeeAvg;
 	}
