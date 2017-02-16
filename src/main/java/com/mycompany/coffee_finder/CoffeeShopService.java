@@ -118,7 +118,7 @@ public class CoffeeShopService {
         }
         catch (SQLException sqle)
         {
-            String errText = "Error deleteing user after db connection made:\n" + sqle.getMessage() + " --- " + sqle.getSQLState() + "\n";
+            String errText = "Error deleteing shop after db connection made:\n" + sqle.getMessage() + " --- " + sqle.getSQLState() + "\n";
             logger.log(Level.SEVERE, errText);
             text.append(errText);
         }

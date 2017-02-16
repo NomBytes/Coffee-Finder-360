@@ -164,7 +164,7 @@ public class Model {
     
     public void deleteShop(int shopid) throws SQLException
     {
-        String sqlDelete="delete from shop where shopid=?";
+        String sqlDelete="delete from shops where shopid=?";
         PreparedStatement pst = createPreparedStatement(sqlDelete);
         pst.setInt(1, shopid);
         pst.execute();
