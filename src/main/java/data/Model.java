@@ -148,7 +148,7 @@ public class Model {
     
     public int newShop(CoffeeShop shop) throws SQLException
     {
-        String sqlInsert="insert into shops (shopname, shopaddress, shopphone) values ('" + shop.getShopName() + "', '" + shop.getAddress() + "', '" + shop.getPhone() + "');";
+        String sqlInsert="insert into shops (shopname, shopaddress, shopphone) values ('" + shop.getMyshopname()+ "', '" + shop.getMyaddress()+ "', '" + shop.getMyphone()+ "');";
         Statement s = createStatement();
         logger.log(Level.INFO, "attempting statement execute");
         s.execute(sqlInsert,Statement.RETURN_GENERATED_KEYS);
@@ -180,11 +180,11 @@ public class Model {
         {
             logger.log(Level.INFO, "Reading row...");
             CoffeeShop shop = new CoffeeShop();
-            shop.setShopName(rows.getString("shopname"));
-            shop.setAddress(rows.getString("shopaddress"));
-            shop.setPhone(rows.getString("shopphone"));
-            shop.setShopId(rows.getInt("shopid"));
-            logger.log(Level.INFO, "Adding user to list with id=" + shop.getShopId());
+            shop.setMyshopname(rows.getString("shopname"));
+            shop.setMyaddress(rows.getString("shopaddress"));
+            shop.setMyphone(rows.getString("shopphone"));
+            shop.setMyshopId(rows.getInt("shopid"));
+            logger.log(Level.INFO, "Adding user to list with id=" + shop.getMyshopId());
             ll.add(shop);
         }
         return ll.toArray(new CoffeeShop[ll.size()]);
