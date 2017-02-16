@@ -1,7 +1,3 @@
-
-
-
-
 /**
  * A Coffee Shop page users can rate or look at reviews.
  * 
@@ -22,26 +18,6 @@ public class CoffeeShop {
         private String myphone;
 	
         private int myshopId;
-
-	
-        
-        public CoffeeShop() {
-            myshopId = 1;
-        }
-        
-	/**
-	 * Constructs a new coffee shop given the name and address.
-	 * @param theName The name of the coffee shop
-	 * @param theAddress The location of the coffee shop
-         * @param thePhone The shop phone number.
-	 */
-	public CoffeeShop(String myshopname, String myaddress, String myphone) {
-		this.myshopname = myshopname;
-		this.myaddress = myaddress;
-                this.myphone = myphone;
-                myshopId = 1;
-
-	}
 
 	
         public int getShopId() {
