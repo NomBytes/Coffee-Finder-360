@@ -133,7 +133,7 @@ public class CoffeeShopService {
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
-    public String createUser(String jobj) throws IOException {
+    public String createShop(String jobj) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         CoffeeShop shop = mapper.readValue(jobj.toString(), CoffeeShop.class);
         
