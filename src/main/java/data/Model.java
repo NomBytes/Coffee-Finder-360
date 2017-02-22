@@ -144,7 +144,7 @@ public class Model {
         return st.execute(sqlQuery.toString());
     }
    
-    
+    /*begin shop*/
     
     public int newShop(CoffeeShop shop) throws SQLException
     {
@@ -203,7 +203,7 @@ public class Model {
         return st.execute(sqlQuery.toString());
     }
     
-    
+    /*begin review*/
    public int newMessage(Messages msg) throws SQLException
     {
         String sqlInsert="insert into messages (userid, message, dateadded) values (" + msg.getUserId() + ", '" + msg.getMessage() + "', now());";
