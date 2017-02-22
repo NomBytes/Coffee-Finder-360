@@ -56,7 +56,7 @@ https://www.pivotaltracker.com/n/projects/1959729
 
 
 ##Showcase Feature Description
-Search by latitude and longitude.
+The user will have the ability to not only search by name and several different variations on location, but they will also be able to search by latitude and longitude.
 
 
 
