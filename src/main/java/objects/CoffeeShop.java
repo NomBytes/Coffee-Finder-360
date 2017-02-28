@@ -1,6 +1,6 @@
 /**
  * A Coffee Shop page users can rate or look at reviews.
- * 
+ *
  * @author Calvin
  * @version 17.02.13
  */
@@ -16,14 +16,37 @@ public class CoffeeShop {
     public void setMyshopname(String myshopname) {
         this.myshopname = myshopname;
     }
-
-    public String getMyaddress() {
+    public String getMyshopname(){
+      return myshopname
+    }
+    public void setMyshopname(String name){
+        this.myshopname = name;
+    }
+    public String getStreet(){
+      return street;
+    }
+    public void setStreet(String street){
+      this.myStreet = street;
+    }
+    public String getState(){
+      return state;
+    }
+    public void setState( String state){
+      this.myState = state;
+    }
+    public void setZip(int zip){
+      this.myzip = zip;
+    }
+    public int getZip(){
+      return myzip;
+    }
+/*    public String getMyaddress() {
         return myaddress;
-    }
+    }*/
 
-    public void setMyaddress(String myaddress) {
+/*    public void setMyaddress(String myaddress) {
         this.myaddress = myaddress;
-    }
+    }*/
 
     public String getMyphone() {
         return myphone;
@@ -43,12 +66,16 @@ public class CoffeeShop {
     }
 
 	private String myshopname;
-	
+
 	/* The address of the shop */
-	private String myaddress;
-        
-        private String myphone;
-	
-        private int myshopId;      
+//	private String myaddress;
+
+  private String myStreet;
+  private String mystate;
+  private int myzip;
+  private String myphone;
+  private int myshopId;
+  private String mylatitude;
+  private String mylongitude;
 
 }
