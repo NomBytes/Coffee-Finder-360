@@ -28,7 +28,7 @@ import org.codehaus.jackson.map.ObjectMapper;
  *
  * @author wingoz
  */
-@Path("users")
+@Path("reviews")
 public class ReviewService {
 
     static final Logger logger = Logger.getLogger(ReviewService.class.getName());
@@ -48,7 +48,7 @@ public class ReviewService {
      */
     @GET
     @Produces(MediaType.TEXT_HTML)
-    public String getUsers() {
+    public String getReviews() {
         //TODO return proper representation object
         StringBuilder sb = new StringBuilder();
         sb.append("<html><body><style>table, th, td {font-family:Arial,Verdana,sans-serif;font-size:16px;padding: 0px;border-spacing: 0px;}</style><b>USERS LIST:</b><br><br><table cellpadding=10 border=1><tr><td>Username</td><td>Email</td><td>Password</td><td>ID</td></tr>");
@@ -74,7 +74,7 @@ public class ReviewService {
     @PUT
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
-    public String updateUser(String jobj) throws IOException
+    public String updateReview(String jobj) throws IOException
     {
         ObjectMapper mapper = new ObjectMapper();
         Review review = mapper.readValue(jobj.toString(), Review.class);
@@ -103,7 +103,7 @@ public class ReviewService {
     @DELETE
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
-    public String deleteUser(String jobj) throws IOException
+    public String deleteReview(String jobj) throws IOException
     {
         ObjectMapper mapper = new ObjectMapper();
         Review review = mapper.readValue(jobj.toString(), Review.class);
@@ -132,7 +132,7 @@ public class ReviewService {
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
-    public String createUser(String jobj) throws IOException {
+    public String createReview(String jobj) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         Review review = mapper.readValue(jobj.toString(), Review.class);
         
