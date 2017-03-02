@@ -43,6 +43,7 @@ public class CoffeeShop {
 
     public int getMyzip() {
         return myzip;
+
     }
 
     public void setMyzip(int myzip) {
