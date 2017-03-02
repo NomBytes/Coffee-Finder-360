@@ -1,0 +1,12 @@
+{
+    "myUserId" : 1 ,
+    "myShopId" : 1 ,
+    "myCoffeeScore" : 4 ,
+    "myBurritoScore" : 3 ,
+    "myDollarScore" : 3 ,
+    "myTags" : ["Good Coffee", "Kinda Expensive"],
+    "myReview" : "Coffee was good, but bagels were meh" ,
+    "myHelpful" : 3 ,
+    "myUnhelpful" : 1
+}
+  

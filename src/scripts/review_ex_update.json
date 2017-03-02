@@ -1,0 +1,12 @@
+{
+    "myReviewId" : 1,    
+    "myUserId" : 1 ,
+    "myShopId" : 1 ,
+    "myCoffeeScore" : 2 ,
+    "myBurritoScore" : 5 ,
+    "myDollarScore" : 5 ,
+    "myTags" : "Good Food",
+    "myReview" : "I really liked the scones, but the coffee tasted like dirt. Also really expensive" ,
+    "myHelpful" : 2 ,
+    "myUnhelpful" : 14
+}
