@@ -16,37 +16,38 @@ public class CoffeeShop {
     public void setMyshopname(String myshopname) {
         this.myshopname = myshopname;
     }
-    public String getMyshopname(){
-      return myshopname
-    }
-    public void setMyshopname(String name){
-        this.myshopname = name;
-    }
-    public String getStreet(){
-      return street;
-    }
-    public void setStreet(String street){
-      this.myStreet = street;
-    }
-    public String getState(){
-      return state;
-    }
-    public void setState( String state){
-      this.myState = state;
-    }
-    public void setZip(int zip){
-      this.myzip = zip;
-    }
-    public int getZip(){
-      return myzip;
-    }
-/*    public String getMyaddress() {
-        return myaddress;
-    }*/
 
-/*    public void setMyaddress(String myaddress) {
-        this.myaddress = myaddress;
-    }*/
+    public String getMycity() {
+        return mycity;
+    }
+
+    public void setMycity(String mycity) {
+        this.mycity = mycity;
+    }
+
+    public String getMystreet() {
+        return mystreet;
+    }
+
+    public void setMystreet(String mystreet) {
+        this.mystreet = mystreet;
+    }
+
+    public String getMystate() {
+        return mystate;
+    }
+
+    public void setMystate(String mystate) {
+        this.mystate = mystate;
+    }
+
+    public int getMyzip() {
+        return myzip;
+    }
+
+    public void setMyzip(int myzip) {
+        this.myzip = myzip;
+    }
 
     public String getMyphone() {
         return myphone;
@@ -60,17 +61,29 @@ public class CoffeeShop {
         return myshopId;
     }
 
-    /* The name of the shop */
     public void setMyshopId(int myshopId) {
         this.myshopId = myshopId;
     }
 
-	private String myshopname;
+    public String getMylatitude() {
+        return mylatitude;
+    }
 
-	/* The address of the shop */
-//	private String myaddress;
+    public void setMylatitude(String mylatitude) {
+        this.mylatitude = mylatitude;
+    }
 
-  private String myStreet;
+    public String getMylongitude() {
+        return mylongitude;
+    }
+
+    public void setMylongitude(String mylongitude) {
+        this.mylongitude = mylongitude;
+    }
+  
+  private String myshopname;
+  private String mycity;
+  private String mystreet;
   private String mystate;
   private int myzip;
   private String myphone;

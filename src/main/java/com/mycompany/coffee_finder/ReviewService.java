@@ -6,6 +6,7 @@
 package com.mycompany.coffee_finder;
 
 import data.Model;
+import data.ReviewModel;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
@@ -20,6 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
+import objects.Review;
 import objects.User;
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -51,13 +53,15 @@ public class ReviewService {
     public String getReviews() {
         //TODO return proper representation object
         StringBuilder sb = new StringBuilder();
-        sb.append("<html><body><style>table, th, td {font-family:Arial,Verdana,sans-serif;font-size:16px;padding: 0px;border-spacing: 0px;}</style><b>USERS LIST:</b><br><br><table cellpadding=10 border=1><tr><td>Username</td><td>Email</td><td>Password</td><td>ID</td></tr>");
+        sb.append("<html><body><style>table, th, td {font-family:Arial,Verdana,sans-serif;font-size:16px;padding: 0px;border-spacing: 0px;}"
+                + "</style><b>Reviews LIST:</b><br><br><table cellpadding=10 border=1><tr>"
+                + "<td>ReviewId</td><td>UserId</td><td>ShopId</td><td>CoffeeScore</td><td>BurritoScore</td><td>DollarScore</td><td>Review</td><td>Helpful</td><td>UnHelpful</td></tr>");
         try
         {
-            Model db = Model.singleton();
+            ReviewModel db = ReviewModel.singleton();
             Review[] reviews = db.getReviews();
             for (int i=0;i<reviews.length;i++)
-                sb.append("<tr><td>" + reviews[i].getMyUserId() + "</td><td>" + reviews[i].getMyShopId() + "</td><td>" + reviews[i].getMyCoffeeScore() + "</td><td>" + reviews[i].getMyBurritoScore() + "</td></tr>");
+                sb.append("<tr><td>" + reviews[i].getReviewId() + "</td><td>" + reviews[i].getUserId() + "</td><td>" + reviews[i].getShopId()+ "</td><td>" + reviews[i].getCoffeeScore()+ "</td><td>"+ reviews[i].getBurritoScore() +"</td><td>"+ reviews[i].getDollarScore() +"</td><td>"+ reviews[i].getReview() +"</td><td>"+ reviews[i].getNumHelpful() +"</td><td>"+ reviews[i].getNumUnhelpful() +"</td></tr>");
         }
         catch (Exception e)
         {
@@ -71,7 +75,7 @@ public class ReviewService {
      * PUT method for updating or creating an instance of GenericResource
      * @param content representation for the resource
      */
-    @PUT
+ /*   @PUT
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
     public String updateReview(String jobj) throws IOException
@@ -80,8 +84,8 @@ public class ReviewService {
         Review review = mapper.readValue(jobj.toString(), Review.class);
         StringBuilder text = new StringBuilder();
         try {
-            Model db = Model.singleton();
-            int userid = review.getMyUserId();
+            ReviewModel db = (ReviewModel)Model.singleton();
+            int userid = review.getUserId();
             db.updateReview(review);
             logger.log(Level.INFO, "update review with userid=" + userid);
             text.append("User id updated with user id=" + userid + "\n");
@@ -99,7 +103,8 @@ public class ReviewService {
         }
         return text.toString();
     }
-    
+*/
+/*   
     @DELETE
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -127,7 +132,7 @@ public class ReviewService {
             text.append("Error connecting to db.");
         }
         return text.toString();
-    }
+    }*/
     
     @POST
     @Produces(MediaType.TEXT_PLAIN)
@@ -139,10 +144,10 @@ public class ReviewService {
         
         StringBuilder text = new StringBuilder();
         try {
-            Model db = Model.singleton();
-            int userid = db.newReview(review);
-            logger.log(Level.INFO, "user persisted to db as userid=" + userid);
-            text.append("User id persisted with id=" + userid);
+            ReviewModel db = ReviewModel.singleton();
+            int reviewid = db.newReview(review);
+            logger.log(Level.INFO, "user persisted to db as userid=" + reviewid);
+            text.append("User id persisted with id=" + reviewid);
         }
         catch (SQLException sqle)
         {

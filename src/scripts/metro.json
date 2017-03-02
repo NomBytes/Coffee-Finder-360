@@ -1,5 +1,10 @@
 {
-    "myshopname": "The Shop",
-    "myaddress": "111 Nope Stree",
-    "myphone": "264-435-3223"
+  "myshopname" : "A name",
+  "mycity" : "A city",
+  "mystreet" : "A street",
+  "mystate" : "WA",
+  "myzip" : 99944,
+  "myphone" : "555-555-5555",
+  "mylatitude" : 10.8348488,
+  "mylongitude" : 8.9999922
 }

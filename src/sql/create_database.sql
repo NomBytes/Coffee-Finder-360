@@ -32,7 +32,12 @@ create table shops (
     shopid serial primary key,
     shopname varchar(255),
     shopaddress varchar(255),
-    shopphone varchar(12)
+    city varchar(255),
+    state varchar(2),
+    zip integer,
+    shopphone varchar(12),
+    lattitude decimal(10,8);
+    longitude decimal(11,8);
 );
 
 

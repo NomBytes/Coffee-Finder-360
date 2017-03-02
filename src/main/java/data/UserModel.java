@@ -5,8 +5,28 @@
  */
 package data;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import objects.User;
+
 public class UserModel extends Model{
 
+  private static UserModel instance;
+  
+  UserModel() throws Exception {
+      super();
+  }
+  
+  public static UserModel singleton() throws Exception {
+        if (instance == null) {
+            instance = new UserModel();
+        }
+        return (UserModel)instance;
+  }
   public int newUser(User usr) throws SQLException
   {
       String sqlInsert="insert into users (username, email, password) values ('" + usr.getUsername() + "'" + ", '" + usr.getEmail() + "', '" + usr.getPassword() + "');";

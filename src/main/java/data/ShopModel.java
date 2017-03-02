@@ -1,10 +1,29 @@
 package data;
 
-public class ShopModel extends Model{
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import objects.CoffeeShop;
 
+public class ShopModel extends Model{
+  private static ShopModel instance;
+    
+  ShopModel() throws Exception {
+      super();
+  }
+
+  public static ShopModel singleton() throws Exception {
+        if (instance == null) {
+            instance = new ShopModel();
+        }
+        return (ShopModel)instance;
+  }
   public int newShop(CoffeeShop shop) throws SQLException
   {
-      String sqlInsert="insert into shops (shopname, shopaddress, shopphone) values ('" + shop.getMyshopname()+ "', '" + shop.getMyaddress()+ "', '" + shop.getMyphone()+ "');";
+      String sqlInsert="insert into shops (shopname, shopaddress, city, state, zip, shopphone, lattitude, longitude) values ('" + shop.getMyshopname() + "', '" + shop.getMystreet()+ "', '" + shop.getMycity()+ "', '" + shop.getMystate() + "', " + shop.getMyzip() + ", '" + shop.getMyphone() + "', " + shop.getMylatitude() + ", " + shop.getMylongitude() + ");";
       Statement s = createStatement();
       logger.log(Level.INFO, "attempting statement execute");
       s.execute(sqlInsert,Statement.RETURN_GENERATED_KEYS);
@@ -37,8 +56,13 @@ public class ShopModel extends Model{
           logger.log(Level.INFO, "Reading row...");
           CoffeeShop shop = new CoffeeShop();
           shop.setMyshopname(rows.getString("shopname"));
-          shop.setMyaddress(rows.getString("shopaddress"));
+          shop.setMystreet(rows.getString("shopaddress"));
+          shop.setMycity(rows.getString("city"));
+          shop.setMystate(rows.getString("state"));
           shop.setMyphone(rows.getString("shopphone"));
+          shop.setMyzip(rows.getInt("zip"));
+          shop.setMylatitude(rows.getString("latitude"));
+          shop.setMylongitude(rows.getString("longitude"));
           shop.setMyshopId(rows.getInt("shopid"));
           logger.log(Level.INFO, "Adding user to list with id=" + shop.getMyshopId());
           ll.add(shop);
@@ -51,7 +75,7 @@ public class ShopModel extends Model{
       StringBuilder sqlQuery = new StringBuilder();
       sqlQuery.append("update shops ");
       sqlQuery.append("set shopname='" + shop.getMyshopname()+ "', ");
-      sqlQuery.append("shopaddress='" + shop.getMyaddress()+ "', ");
+      sqlQuery.append("shopaddress='" + shop.getMystreet()+ "', ");
       sqlQuery.append("shopphone='" + shop.getMyphone()+ "' ");
       sqlQuery.append("where shopid=" + shop.getMyshopId()+ ";");
       Statement st = createStatement();

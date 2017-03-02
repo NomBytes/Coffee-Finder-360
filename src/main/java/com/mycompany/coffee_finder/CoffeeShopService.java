@@ -6,6 +6,7 @@
 package com.mycompany.coffee_finder;
 
 import data.Model;
+import data.ShopModel;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -52,13 +53,13 @@ public class CoffeeShopService {
     public String getShops() {
         //TODO return proper representation object
         StringBuilder sb = new StringBuilder();
-        sb.append("<html><body><style>table, th, td {font-family:Arial,Verdana,sans-serif;font-size:16px;padding: 0px;border-spacing: 0px;}</style><b>USERS LIST:</b><br><br><table cellpadding=10 border=1><tr><td>ID</td><td>Name</td><td>Address</td><td>Phone</td></tr>");
+        sb.append("<html><body><style>table, th, td {font-family:Arial,Verdana,sans-serif;font-size:16px;padding: 0px;border-spacing: 0px;}</style><b>Shops:</b><br><br><table cellpadding=10 border=1><tr><td>ID</td><td>Name</td><td>Address</td><td>City</td><td>State</td><td>Zip</td><td>Phone</td><td>Lattitude</td><td>Longitude</td></tr>");
         try
         {
-            Model db = Model.singleton();
+            ShopModel db = ShopModel.singleton();
             CoffeeShop[] shops = db.getShops();
             for (int i=0;i<shops.length;i++)
-                sb.append("<tr><td>" + shops[i].getMyshopId()+ "</td><td>" + shops[i].getMyshopname()+ "</td><td>" + shops[i].getMyaddress()+ "</td><td>" + shops[i].getMyphone()+ "</td></tr>");
+                sb.append("<tr><td>" + shops[i].getMyshopId()+ "</td><td>" + shops[i].getMyshopname()+ "</td><td>" + shops[i].getMystreet()+ "</td><td>"+ shops[i].getMycity() +"</td><td>"+ shops[i].getMystate() +"</td><td>"+ shops[i].getMyzip() +"</td><td>" + shops[i].getMyphone()+ "</td><td>" + shops[i].getMylatitude() + "</td><td>"+ shops[i].getMylongitude() +"</td></tr>");
         }
         catch (Exception e)
         {
@@ -81,7 +82,7 @@ public class CoffeeShopService {
         CoffeeShop shop = mapper.readValue(jobj.toString(), CoffeeShop.class);
         StringBuilder text = new StringBuilder();
         try {
-            Model db = Model.singleton();
+            ShopModel db = ShopModel.singleton();
             int shopid = shop.getMyshopId();
             db.updateShop(shop);
             logger.log(Level.INFO, "update shop with shopid=" + shopid);
@@ -110,7 +111,7 @@ public class CoffeeShopService {
         CoffeeShop shop = mapper.readValue(jobj.toString(), CoffeeShop.class);
         StringBuilder text = new StringBuilder();
         try {
-            Model db = Model.singleton();
+            ShopModel db = ShopModel.singleton();
             int shopid = shop.getMyshopId();
             db.deleteShop(shopid);
             logger.log(Level.INFO, "shop deleted from db=" + shopid);
@@ -148,7 +149,7 @@ public class CoffeeShopService {
             text.append(msg.toString() + "\n");
         */
         try {
-            Model db = Model.singleton();
+            ShopModel db = ShopModel.singleton();
             int shopid = db.newShop(shop);
             logger.log(Level.INFO, "shop persisted to db as shopid=" + shopid);
             text.append("Shop id persisted with id=" + shopid);

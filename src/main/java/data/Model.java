@@ -25,15 +25,16 @@ import objects.Review;
  */
 public class Model {
     static final Logger logger = Logger.getLogger(Model.class.getName());
-    private static Model instance;
+    //private static Model instance;
     private Connection conn;
     
-    public static Model singleton() throws Exception {
-        if (instance == null) {
-            instance = new Model();
-        }
-        return instance;
-    }
+    
+//    public static Model singleton() throws Exception {
+//        if (instance == null) {
+//            instance = new Model();
+//        }
+//        return instance;
+//    }
     
     Model() throws Exception
     {
@@ -52,7 +53,7 @@ public class Model {
         return conn;
     }
     
-    private Statement createStatement() throws SQLException
+    protected Statement createStatement() throws SQLException
     {
         Connection conn = getConnection();
         if ((conn != null) && (!conn.isClosed()))
@@ -69,7 +70,7 @@ public class Model {
         return null;
     }
     
-    private PreparedStatement createPreparedStatement(String sql) throws SQLException
+    protected PreparedStatement createPreparedStatement(String sql) throws SQLException
     {
         Connection conn = getConnection();
         if ((conn != null) && (!conn.isClosed()))

@@ -10,6 +10,16 @@ import java.util.ArrayList;
  */
 public class Review {
 	
+        private int reviewId;
+
+    public int getReviewId() {
+        return reviewId;
+    }
+
+    public void setReviewId(int reviewId) {
+        this.reviewId = reviewId;
+    }
+        
 	/* The user who submitted the review */
 	private int myUserId;
         
@@ -93,6 +103,9 @@ public class Review {
 		myReview = theReview;
 	}
 	
+        public Review() {
+        }
+        
 	/**
 	 * Retrieves the user ID of the review's author.
 	 * @return the user ID of the reviewer
@@ -181,4 +194,8 @@ public class Review {
 	public int getNumUnhelpful() {
 		return myUnhelpful;
 	}
+        
+        public int getShopId() {
+            return myShopId;
+        }
 }

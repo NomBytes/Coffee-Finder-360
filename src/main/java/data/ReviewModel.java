@@ -1,10 +1,31 @@
 package data;
 
-public class ReviewModel extends model{
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import objects.Messages;
+import objects.Review;
 
-  public int newReview(Messages msg) throws SQLException
+public class ReviewModel extends Model  {
+
+    private static ReviewModel instance;
+    
+    ReviewModel()  throws Exception {
+        super();
+    }
+    
+    public static ReviewModel singleton() throws Exception {
+        if (instance == null) {
+            instance = new ReviewModel();
+        }
+        return (ReviewModel)instance;
+    }
+        
+  public int newReview(Review review) throws SQLException
    {
-       String sqlInsert="insert into messages (userid, message, dateadded) values (" + msg.getUserId() + ", '" + msg.getMessage() + "', now());";
+       String sqlInsert="insert into reviews (userid, message, dateadded) values (" + review.getUserId() + ", '" + review.getReview() + "', now());";
        Statement s = createStatement();
        logger.log(Level.INFO, "attempting statement execute");
        s.execute(sqlInsert,Statement.RETURN_GENERATED_KEYS);
@@ -18,23 +39,28 @@ public class ReviewModel extends model{
        return userid;
    }
 
-   public Messages[] getReview() throws SQLException
+   public Review[] getReviews() throws SQLException
    {
-       LinkedList<Messages> ll = new LinkedList<Messages>();
-       String sqlQuery ="select * from messages;";
+       LinkedList<Review> ll = new LinkedList<Review>();
+       String sqlQuery ="select * from reviews;";
        Statement st = createStatement();
        ResultSet rows = st.executeQuery(sqlQuery);
        while (rows.next())
        {
            logger.log(Level.INFO, "Reading row...");
-           Messages msg = new Messages();
-           msg.setMessageId(rows.getInt("messageid"));
-           msg.setUserId(rows.getInt("userid"));
-           msg.setMessage(rows.getString("message"));
-           logger.log(Level.INFO, "Adding user to list with id=" + msg.getUserId());
-           ll.add(msg);
+           Review rev = new Review();
+           rev.setReviewId(rows.getInt("reviewid"));
+           rev.setMyUserId(rows.getInt("userid"));
+           rev.setMyShopId(rows.getInt("shopid"));
+           rev.setMyCoffeeScore(rows.getInt("coffeescore"));
+           rev.setMyBurritoScore(rows.getInt("burritoscore"));
+           rev.setMyDollarScore(rows.getInt("dollarscore"));
+           rev.setMyReview(rows.getString("review"));
+           rev.setMyHelpful(rows.getInt("helpfulcount"));
+           rev.setMyUnhelpful(rows.getInt("unhelpfulcount"));
+           logger.log(Level.INFO, "Adding user to list with id=" + rev.getReviewId());
+           ll.add(rev);
        }
-       return ll.toArray(new Messages[ll.size()]);
+       return ll.toArray(new Review[ll.size()]);
    }
-}
 }

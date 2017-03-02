@@ -6,6 +6,7 @@
 package com.mycompany.coffee_finder;
 
 import data.Model;
+import data.UserModel;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
@@ -54,7 +55,7 @@ public class UserService {
         sb.append("<html><body><style>table, th, td {font-family:Arial,Verdana,sans-serif;font-size:16px;padding: 0px;border-spacing: 0px;}</style><b>USERS LIST:</b><br><br><table cellpadding=10 border=1><tr><td>Username</td><td>Email</td><td>Password</td><td>ID</td></tr>");
         try
         {
-            Model db = Model.singleton();
+            UserModel db = UserModel.singleton();
             User[] users = db.getUsers();
             for (int i=0;i<users.length;i++)
                 sb.append("<tr><td>" + users[i].getUsername() + "</td><td>" + users[i].getEmail() + "</td><td>" + users[i].getPassword() + "</td><td>" + users[i].getUserId() + "</td></tr>");
@@ -80,7 +81,7 @@ public class UserService {
         User user = mapper.readValue(jobj.toString(), User.class);
         StringBuilder text = new StringBuilder();
         try {
-            Model db = Model.singleton();
+            UserModel db = UserModel.singleton();
             int userid = user.getUserId();
             db.updateUser(user);
             logger.log(Level.INFO, "update user with userid=" + userid);
@@ -109,7 +110,7 @@ public class UserService {
         User user = mapper.readValue(jobj.toString(), User.class);
         StringBuilder text = new StringBuilder();
         try {
-            Model db = Model.singleton();
+            UserModel db = UserModel.singleton();
             int userid = user.getUserId();
             db.deleteUser(userid);
             logger.log(Level.INFO, "user deleted from db=" + userid);
@@ -147,7 +148,7 @@ public class UserService {
             text.append(msg.toString() + "\n");
         */
         try {
-            Model db = Model.singleton();
+            UserModel db = UserModel.singleton();
             int userid = db.newUser(user);
             logger.log(Level.INFO, "user persisted to db as userid=" + userid);
             text.append("User id persisted with id=" + userid);
