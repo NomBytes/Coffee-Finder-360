@@ -1,5 +1,8 @@
 {
     "myshopname": "Boogy Woogy",
-    "myaddress": "123 I See Three ST",
+    "mystreet": "123 I See Three ST",
+    "mycity": "Tacoma",
+    "mystate": "WA",
+    "myzip": 98359,
     "myphone": "800-843-3779"
 }

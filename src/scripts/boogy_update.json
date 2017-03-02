@@ -1,6 +1,9 @@
 {
   "myshopname": "Updated Coffetto",
-  "myaddress": "5524 Undergroun Mole Hill",
+  "mystreet": "5524 Undergroun Mole Hill",
+  "mycity": "Portland",
+  "mystate": "ME",
   "myphone": "100-110-0101",
+  "myzip": 12345,
   "myshopId": 4
 }
