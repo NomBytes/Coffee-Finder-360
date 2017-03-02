@@ -38,7 +38,7 @@ public class UserModel extends Model{
       logger.log(Level.INFO, "retrieved keys from statement");
       int userid = -1;
       while (rs.next())
-          userid = rs.getInt(4);   // assuming 4th column is userid
+          userid = rs.getInt(1);   // assuming 4th column is userid
       logger.log(Level.INFO, "The new user id=" + userid);
       return userid;
   }
