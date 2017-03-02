@@ -1,4 +1,1 @@
-Connection info string:
-   "dbname=d6q9j0ee835ij8 host=ec2-23-23-186-157.compute-1.amazonaws.com port=5432 user=pdsaxjjpyxkgtt password=623e0d9772eb7e5b49988c19e1915ffe495ae11a46f4bd442f285539ff61f578 sslmode=require"
-Connection URL:
-   postgres://pdsaxjjpyxkgtt:623e0d9772eb7e5b49988c19e1915ffe495ae11a46f4bd442f285539ff61f578@ec2-23-23-186-157.compute-1.amazonaws.com:5432/d6q9j0ee835ij8
+jdbc:postgresql://ec2-23-23-186-157.compute-1.amazonaws.com:5432/d6q9j0ee835ij8?user=pdsaxjjpyxkgtt&password=623e0d9772eb7e5b49988c19e1915ffe495ae11a46f4bd442f285539ff61f578&sslmode=require

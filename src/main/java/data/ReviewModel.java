@@ -25,7 +25,7 @@ public class ReviewModel extends Model  {
         
   public int newReview(Review review) throws SQLException
    {
-       String sqlInsert="insert into reviews (userid, message, dateadded) values (" + review.getUserId() + ", '" + review.getReview() + "', now());";
+       String sqlInsert="insert into reviews (userid, review, dateadded) values (" + review.getUserId() + ", '" + review.getReview() + "', now());";
        Statement s = createStatement();
        logger.log(Level.INFO, "attempting statement execute");
        s.execute(sqlInsert,Statement.RETURN_GENERATED_KEYS);
