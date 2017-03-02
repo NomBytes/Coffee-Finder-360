@@ -23,7 +23,7 @@ public class ShopModel extends Model{
   }
   public int newShop(CoffeeShop shop) throws SQLException
   {
-      String sqlInsert="insert into shops (shopname, shopaddress, city, state, zip, shopphone, lattitude, longitude) values ('" + shop.getMyshopname() + "', '" + shop.getMystreet()+ "', '" + shop.getMycity()+ "', '" + shop.getMystate() + "', " + shop.getMyzip() + ", '" + shop.getMyphone() + "', " + shop.getMylatitude() + ", " + shop.getMylongitude() + ");";
+      String sqlInsert="insert into shops (shopname, shopaddress, city, state, zip, shopphone, latitude, longitude) values ('" + shop.getMyshopname() + "', '" + shop.getMystreet()+ "', '" + shop.getMycity()+ "', '" + shop.getMystate() + "', " + shop.getMyzip() + ", '" + shop.getMyphone() + "', " + shop.getMylatitude() + ", " + shop.getMylongitude() + ");";
       Statement s = createStatement();
       logger.log(Level.INFO, "attempting statement execute");
       s.execute(sqlInsert,Statement.RETURN_GENERATED_KEYS);
