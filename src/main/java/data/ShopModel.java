@@ -76,6 +76,9 @@ public class ShopModel extends Model{
       sqlQuery.append("update shops ");
       sqlQuery.append("set shopname='" + shop.getMyshopname()+ "', ");
       sqlQuery.append("shopaddress='" + shop.getMystreet()+ "', ");
+      sqlQuery.append("city='"+ shop.getMycity() +"', ");
+      sqlQuery.append("state='"+ shop.getMystate() +"', ");
+      sqlQuery.append("zip='"+ shop.getMyzip() +"', ");
       sqlQuery.append("shopphone='" + shop.getMyphone()+ "' ");
       sqlQuery.append("where shopid=" + shop.getMyshopId()+ ";");
       Statement st = createStatement();
