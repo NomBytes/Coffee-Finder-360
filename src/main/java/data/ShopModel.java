@@ -21,7 +21,7 @@ public class ShopModel extends Model{
         }
         return (ShopModel)instance;
   }
-  public int newShop(CoffeeShop shop) throws SQLException
+  public CoffeeShop newShop(CoffeeShop shop) throws SQLException
   {
       String sqlInsert="insert into shops (shopname, shopaddress, city, state, zip, shopphone, latitude, longitude) values ('" + shop.getMyshopname() + "', '" + shop.getMystreet()+ "', '" + shop.getMycity()+ "', '" + shop.getMystate() + "', " + shop.getMyzip() + ", '" + shop.getMyphone() + "', " + shop.getMylatitude() + ", " + shop.getMylongitude() + ");";
       Statement s = createStatement();
@@ -32,9 +32,10 @@ public class ShopModel extends Model{
       logger.log(Level.INFO, "retrieved keys from statement");
       int shopid = -1;
       while (rs.next())
-          shopid = rs.getInt(1);   // assuming 1rd column is userid
+          shopid = rs.getInt(1);   // assuming 1rd column is shopid
       logger.log(Level.INFO, "The new shop id=" + shopid);
-      return shopid;
+      shop.setMyshopId(shopid);
+      return shop;
   }
 
   public void deleteShop(int shopid) throws SQLException
@@ -45,12 +46,16 @@ public class ShopModel extends Model{
       pst.execute();
   }
 
-  public CoffeeShop[] getShops() throws SQLException
+  public CoffeeShop[] getShops(int sid) throws SQLException
   {
       LinkedList<CoffeeShop> ll = new LinkedList<CoffeeShop>();
-      String sqlQuery ="select * from shops;";
+      String sqlQuery ="select * from shops";
+      sqlQuery += (sid > 0) ? " where shopid=" + sid + " order by shopid;" : " order by shopid;";
       Statement st = createStatement();
+      
+      
       ResultSet rows = st.executeQuery(sqlQuery);
+      
       while (rows.next())
       {
           logger.log(Level.INFO, "Reading row...");
@@ -64,9 +69,12 @@ public class ShopModel extends Model{
           shop.setMylatitude(rows.getString("latitude"));
           shop.setMylongitude(rows.getString("longitude"));
           shop.setMyshopId(rows.getInt("shopid"));
-          logger.log(Level.INFO, "Adding user to list with id=" + shop.getMyshopId());
+          shop.setMyopenhours(rows.getInt("openhours"));
+          shop.setMyclosehours(rows.getInt("closehours"));
+          logger.log(Level.INFO, "Adding shop to list with id=" + shop.getMyshopId());
           ll.add(shop);
       }
+      
       return ll.toArray(new CoffeeShop[ll.size()]);
   }
 
@@ -79,7 +87,11 @@ public class ShopModel extends Model{
       sqlQuery.append("city='"+ shop.getMycity() +"', ");
       sqlQuery.append("state='"+ shop.getMystate() +"', ");
       sqlQuery.append("zip='"+ shop.getMyzip() +"', ");
-      sqlQuery.append("shopphone='" + shop.getMyphone()+ "' ");
+      sqlQuery.append("shopphone='" + shop.getMyphone()+ "', ");
+      sqlQuery.append("latitude=" + shop.getMylatitude() + ", ");
+      sqlQuery.append("longitude=" + shop.getMylongitude() + ", ");
+      sqlQuery.append("openhours=" + shop.getMyopenhours() + ", ");
+      sqlQuery.append("closehours=" + shop.getMyclosehours() + " ");
       sqlQuery.append("where shopid=" + shop.getMyshopId()+ ";");
       Statement st = createStatement();
       logger.log(Level.INFO, "UPDATE SQL=" + sqlQuery.toString());

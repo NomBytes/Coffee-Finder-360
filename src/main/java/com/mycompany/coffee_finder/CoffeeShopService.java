@@ -7,8 +7,11 @@ package com.mycompany.coffee_finder;
 
 import data.Model;
 import data.ShopModel;
+import data.UserModel;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
@@ -17,6 +20,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -24,6 +28,8 @@ import javax.ws.rs.core.UriInfo;
 import objects.CoffeeShop;
 import objects.User;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 
 /**
  * REST Web Service
@@ -43,30 +49,43 @@ public class CoffeeShopService {
      */
     public CoffeeShopService() {
     }
-
+    
+    
     /**
      * Retrieves representation of an instance of services.GenericResource
      * @return an instance of java.lang.String
      */
+    
     @GET
-    @Produces(MediaType.TEXT_HTML)
-    public String getShops() {
-        //TODO return proper representation object
-        StringBuilder sb = new StringBuilder();
-        sb.append("<html><body><style>table, th, td {font-family:Arial,Verdana,sans-serif;font-size:16px;padding: 0px;border-spacing: 0px;}</style><b>Shops:</b><br><br><table cellpadding=10 border=1><tr><td>ID</td><td>Name</td><td>Address</td><td>City</td><td>State</td><td>Zip</td><td>Phone</td><td>Lattitude</td><td>Longitude</td></tr>");
+    @Path("{shopid}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<CoffeeShop> getShops(@PathParam("shopid") String sid) {
+        
+    
+        LinkedList<CoffeeShop> lshops = new LinkedList<CoffeeShop>();
+        
+       
         try
         {
+            int shopid = Integer.parseInt(sid);
+                    
             ShopModel db = ShopModel.singleton();
-            CoffeeShop[] shops = db.getShops();
-            for (int i=0;i<shops.length;i++)
-                sb.append("<tr><td>" + shops[i].getMyshopId()+ "</td><td>" + shops[i].getMyshopname()+ "</td><td>" + shops[i].getMystreet()+ "</td><td>"+ shops[i].getMycity() +"</td><td>"+ shops[i].getMystate() +"</td><td>"+ shops[i].getMyzip() +"</td><td>" + shops[i].getMyphone()+ "</td><td>" + shops[i].getMylatitude() + "</td><td>"+ shops[i].getMylongitude() +"</td></tr>");
+            
+            CoffeeShop[] shops = db.getShops(shopid);
+            
+            if (shopid == 0)
+                for (int i=0;i<shops.length;i++)
+                    lshops.add(shops[i]);
+            else
+                lshops.add(shops[0]);
+            logger.log(Level.INFO, "Received request to fetch shop id=" + shopid);
+            return lshops;
         }
         catch (Exception e)
         {
-            sb.append("</table><br>Error getting users: " + e.toString() + "<br>");
+            return null;
         }
-        sb.append("</table></body></html>");
-        return sb.toString();
+        
     }
 
     /**
@@ -132,9 +151,13 @@ public class CoffeeShopService {
     }
    
     @POST
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public String createShop(String jobj) throws IOException {
+    public List<CoffeeShop> createShop(String jobj) throws IOException {
+        
+        
+        LinkedList<CoffeeShop> lshops = new LinkedList<CoffeeShop>();
+        
         ObjectMapper mapper = new ObjectMapper();
         CoffeeShop shop = mapper.readValue(jobj.toString(), CoffeeShop.class);
         
@@ -150,9 +173,10 @@ public class CoffeeShopService {
         */
         try {
             ShopModel db = ShopModel.singleton();
-            int shopid = db.newShop(shop);
-            logger.log(Level.INFO, "shop persisted to db as shopid=" + shopid);
-            text.append("Shop id persisted with id=" + shopid);
+            CoffeeShop shp = db.newShop(shop);
+            lshops.add(shp);
+            logger.log(Level.INFO, "shop persisted to db as shopid=" + shp.getMyshopId());
+            text.append("Shop id persisted with id=" + shp.getMyshopId());
         }
         catch (SQLException sqle)
         {
@@ -166,6 +190,7 @@ public class CoffeeShopService {
         }
         
         
-        return text.toString();
+        return lshops;
     }
+      
 }

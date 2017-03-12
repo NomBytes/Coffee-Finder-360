@@ -52,10 +52,6 @@ public class Review {
         this.myDollarScore = myDollarScore;
     }
 
-    public void setMyTags(ArrayList<String> myTags) {
-        this.myTags = myTags;
-    }
-
     public void setMyReview(String myReview) {
         this.myReview = myReview;
     }
@@ -71,9 +67,6 @@ public class Review {
 
 	private int myDollarScore;
 
-	/* The Tags used in the review */
-	private ArrayList<String> myTags;
-	
 	/* The review text. */
 	private String myReview;
 	
@@ -89,17 +82,14 @@ public class Review {
 	 * @param theCoffee The coffee score given by the user
 	 * @param theBurrito The burrito score given by the user
 	 * @param theDollar The dollar score given by the user
-	 * @param theTags The tags given by the user.
 	 * @param theReview The contents of the review.
 	 */
-	public Review(int theUserId, int theShopId, int theCoffee, int theBurrito, int theDollar, 
-			      ArrayList<String> theTags, String theReview) {
+	public Review(int theUserId, int theShopId, int theCoffee, int theBurrito, int theDollar, String theReview) {
 		myUserId = theUserId;
                 myShopId = theShopId;
 		myCoffeeScore = theCoffee;
 		myBurritoScore = theBurrito;
 		myDollarScore = theDollar;
-		myTags = theTags;  //NEED TO CONSIDER FIXING
 		myReview = theReview;
 	}
 	
@@ -144,31 +134,6 @@ public class Review {
 	 */
 	public int getDollarScore() {
 		return myDollarScore;
-	}
-	
-	/**
-	 * Returns the associated tags from the review
-	 * @return The tags associated from the review
-	 */
-	public ArrayList<String> getTags() {
-		return myTags; //CONSIDER FIXING
-	}
-	
-	/**
-	 * Grabs a specific tag from the user interview
-	 * @param theElement The location of the tag
-	 * @return The tag at the specific location
-	 */
-	public String getTagAt(int theElement) {
-		return myTags.get(theElement);
-	}
-	
-	/**
-	 * Gets the number of tags from the review
-	 * @return the number of tags from the review
-	 */
-	public int getNumberOfTags() {
-		return myTags.size();
 	}
 
 	/**

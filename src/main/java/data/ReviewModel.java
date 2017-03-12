@@ -39,10 +39,12 @@ public class ReviewModel extends Model  {
        return userid;
    }
 
-   public Review[] getReviews() throws SQLException
+   public Review[] getReviews(int rid) throws SQLException
    {
        LinkedList<Review> ll = new LinkedList<Review>();
-       String sqlQuery ="select * from reviews;";
+       
+       String sqlQuery ="select * from reviews";
+       sqlQuery += (rid > 0) ? " where reviewid=" + rid + " order by reviewid;" : " order by reviewid;";
        Statement st = createStatement();
        ResultSet rows = st.executeQuery(sqlQuery);
        while (rows.next())
@@ -61,6 +63,7 @@ public class ReviewModel extends Model  {
            logger.log(Level.INFO, "Adding user to list with id=" + rev.getReviewId());
            ll.add(rev);
        }
+       logger.log(Level.INFO, " " + ll.toString());
        return ll.toArray(new Review[ll.size()]);
    }
 }

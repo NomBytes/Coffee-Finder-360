@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Coffee Finder</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<style>
+	body {
+		padding-top: 100px;
+	}
+        
+        .form {
+            border-bottom: 2px dotted #ECECEC;
+        }
+        
+</style>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> 
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script language="javascript">
+    $(document).ready(function () { 
+        var old_reviewid = document.getElementById("reviewid").value;
+        
+        // Get-Data Click function
+        //
+        // Calls the GET service to lookup a currently entered reviewid
+        $('#get-data').click(function () 
+        {
+          var reviewid = document.getElementById("reviewid");
+          var url='tcss360/reviews/'+reviewid.value;
+
+          $.ajax({
+            type: 'GET',
+            url: url,
+            datatype: 'json',
+            success: render_form
+          });        
+        });
+
+        $('#reviewid').focusin(function () {
+            old_reviewid = document.getElementById("reviewid").value;    
+        });
+
+        // If the review exits the reviewid textbox and places focus on another
+        // GUI control on the screen, and if the review id had changed since
+        // the review entered the box, then reload the review form
+        $('#reviewid').focusout(function () {
+            var curr_reviewid = document.getElementById("reviewid").value;    
+            //alert(curr_reviewid + '---' + old_reviewid)
+            if (curr_reviewid != old_reviewid)
+                getreview();
+        });
+        
+        // Delete-User Click function
+        //
+        // Calls the DELETE service to delete the selected review
+        $('#delete-review').click(function ()
+        {
+           var reviewid = document.getElementById("reviewid");
+           var reviewname = document.getElementById("name");
+           var review = { 'myreviewId': reviewid.value };           
+           var url='tcss360/reviews/';
+           if (confirm('Are you sure - DELETE ' + reviewname.value + '-(' + reviewid.value + ') ?')) {
+             $.ajax({
+               type: 'DELETE',
+               url: url,
+               datatype: 'json',
+               data: JSON.stringify(review),
+               contentType: 'application/json',
+               success: render_delete
+             }); 
+           } 
+        });
+        
+        // New-User Click function
+        //
+        // Clears the form to allow entry of a new review record
+        $('#new-review').click(function ()
+        {
+           document.getElementById("reviewid").disabled = true;
+           document.getElementById("userid").value = "";
+           document.getElementById("coffeescore").value = "";
+           document.getElementById("burritoscore").value="";
+           document.getElementById("dollarscore").value="";
+           document.getElementById("review").value="";
+           document.getElementById("helpfulcount").value="";
+           document.getElementById("unhelpfulcount").value="";
+        });        
+
+        // Save-User Click function
+        //
+        // If a new review, calls the POST to create a new review
+        // If an existing review, call the PUT to update the review
+        $('#save-review').click(function ()
+        {
+            if (document.getElementById("reviewid").disabled)
+            {
+                // Create a new record
+                var userid = document.getElementById("userid");
+                var coffeescore = document.getElementById("coffeescore");
+                var burritoscore = document.getElementById("burritoscore");
+                var dollarscore = document.getElementById("dollarscore");
+                var review = document.getElementById("review");
+                var helpfulcount = document.getElementById("helpfulcount");
+                var unhelpfulcount = document.getElementById("unhelpfulcount");
+                
+                var review = {
+                             'myUserId': userid.value,
+                             'myCoffeeScore' : coffeescore.value,
+                             'myBurritoScore' : burritoscore.value,
+                             'myDollarScore' : dollarscore.value,
+                             'myReview' : review.value,
+                             'myHelpfulcount' : helpfulcount.value,
+                             'myUnhelpfulcount' : unhelpfulcount.value
+                         };           
+                var url='tcss360/reviews/';
+                if (confirm('Are you sure - CREATE ' + reviewname.value + ' ?')) {
+                  $.ajax({
+                    type: 'POST',
+                    url: url,
+                    datatype: 'json',
+                    data: JSON.stringify(review),
+                    contentType: 'application/json',
+                    success: render_newreview
+                  }); 
+                }                 
+            }
+            else
+            {
+                // Update an existing record
+                var reviewid = document.getElementById("reviewid")
+                var userid = document.getElementById("userid");
+                var coffeescore = document.getElementById("coffeescore");
+                var burritoscore = document.getElementById("burritoscore");
+                var dollarscore = document.getElementById("dollarscore");
+                var review = document.getElementById("review");
+                var helpfulcount = document.getElementById("helpfulcount");
+                var unhelpfulcount = document.getElementById("unhelpfulcount");
+                
+                var review = { 'reviewId' : reviewid.value,
+                             'myUserId': userid.value,
+                             'myCoffeeScore' : coffeescore.value,
+                             'myBurritoScore' : burritoscore.value,
+                             'myDollarScore' : dollarscore.value,
+                             'myReview' : review.value,
+                             'myHelpfulcount' : helpfulcount.value,
+                             'myUnhelpfulcount' : unhelpfulcount.value
+                         };          
+                var url='tcss360/reviews/';
+                if (confirm('Are you sure - UPDATE ' + reviewname.value + ' ?')) {
+                  $.ajax({
+                    type: 'PUT',
+                    url: url,
+                    datatype: 'json',
+                    data: JSON.stringify(review),
+                    contentType: 'application/json',
+                    success: render_clear
+                  }); 
+                }                 
+            }
+        });
+        
+        // Dynamic table event handler
+        // 
+        // Gets the selected review row from the database and puts it
+        // display the review in the form.  Note, technically we could just
+        // read the static table content but this approach would allow
+        // you to read the entire review record including fields which may
+        // not be displayed in the HTML table.
+        // 
+        // Use .text() as td doesn't have method .val()
+        // Empty first time as the td has no text until clicked.
+        $(".table-body").on('click', 'tr', function() {
+            var clicked_reviewid=$(this).find('td:first').text();
+            old_reviewid = clicked_reviewid;
+            var url='tcss360/reviews/'+clicked_reviewid;
+             $.ajax({
+               type: 'GET',
+               url: url,
+               datatype: 'json',
+               success: render_form
+             });        
+         });
+         
+
+        
+        // get and display reviews when the form is first loaded
+        getreviews();
+        
+    } );
+
+    // gets and displays reviews by calling render
+    function getreviews() {
+        // Form load
+        var url='tcss360/reviews/0';
+
+        $.ajax({
+          type: 'GET',
+          url: url,
+          datatype: 'json',
+          success: render
+        }); 
+    }
+    
+    // gets and displays reviews by calling render
+    function getreview() {
+        // Form load
+        var reviewid = document.getElementById("reviewid"); 
+        var url='tcss360/reviews/' + reviewid.value;
+
+        $.ajax({
+          type: 'GET',
+          url: url,
+          datatype: 'json',
+          success: render_form
+        }); 
+    }    
+    
+    
+    // renders the review table
+    function render(data)  {
+      $.each(data, function(index, review) { 
+          var newrow = "<tr><td id=\"reviewid\"" + index + "\">"+ review.reviewId + "</td>";
+          newrow += "<td id=\"userid\">" + review.myUserId + "</td>";
+          newrow += "<td id=\"coffeescore\">" + review.myCoffeeScore + "</td>";
+          newrow += "<td id=\"burritoscore\">" + review.myBurritoScore + "</td>";
+          newrow += "<td id=\"dollarscore\">" + review.myDollarScore + "</td>";
+          newrow += "<td id=\"review\">" + review.myReview + "</td>";
+          newrow += "<td id=\"helpfulcount\">" + review.myHelpfulcount + "</td>";
+          newrow += "<td id=\"unhelpfulcount\">" + review.myUnhelpfulcount + "</td></tr>";
+          $('#mybody').append(newrow);
+      });
+    }
+    
+    // clears the table, reloads the reviews
+    function render_clear(data)
+    {
+        $('#mybody').empty();
+        getreviews();
+    }
+    
+    // clears the table, reloads the reviews, clears the review id textbox
+    function render_delete(data)
+    {
+        $('#mybody').empty();
+        getreviews();
+        document.getElementById("reviewid").value = "";
+    }
+    
+    // display the reviewid of a newly created review as supplied from the service
+    function render_newreview(data)
+    {
+        $.each(data, function(index, review) { 
+          document.getElementById("reviewid").value = review.myreviewId;
+        });
+        document.getElementById("reviewid").disabled = false;
+        $('#mybody').empty();
+        getreviews();
+    }
+    
+    
+    // displays a selected review in the form
+    function render_form(data)  {
+      var list = data;
+      if (list)
+        $.each(list, function(index, review) { 
+            $('#reviewid').val(review.myreviewId);
+            $('#userid').val(review.myreviewname);
+            $('#coffeescore').val(review.mystreet);
+            $('#burritorscore').val(review.mycity);
+            $('#dollarscore').val(review.mystate);
+            $('#review').val(review.myzip);
+            $('#helpfulcount').val(review.myphone);
+            $('#unhelpfulcount').val(review.myopenhours);
+        });
+      else
+      {
+           document.getElementById("reviewid").value = "";
+           document.getElementById("userid").value = "";
+           document.getElementById("coffeescore").value="";
+           document.getElementById("burritoscore").value="";
+           document.getElementById("dollarscore").value="";
+           document.getElementById("review").value="";
+           document.getElementById("helpfulcount").value="";
+           document.getElementById("unhelpfulcount").value="";
+      }
+    }    
+  </script>
+  </head>
+  <body id="thePage" data-target=".navbar" data-offset="50" onload="">
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+         <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#"><span>Coffee Finder</span></a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="reviews.html">Shops</a></li>
+         <li><a href="users.html">Users</a></li>
+        <li><a href="reviews.html">Reviews </a></li>
+       </ul>
+    </div>
+  </div>
+</nav>
+      
+      
+   
+
+      
+  <div id="reviews" class="container text-large">
+      <div class="row test">
+          <form class="form-horizontal">
+          <div class="col-md-7 form">
+            <div class="row">
+             <input type="button" class="btn btn-primary" value="Get Review" onclick="" id="get-data"/>
+             <input type="button" class="btn btn-primary" value="New Review" onclick="" id="new-review"/>
+             <input type="button" class="btn btn-primary" value="Save Review" onclick="" id="save-review"/>
+             <input type="button" class="btn btn-primary" value="Delete Review" onclick="" id="delete-review"/>
+            </div>
+             
+              <br />
+              <br />
+            <div class="form-group">  
+             <label class="control-label col-md-3" for="reviewid">Enter Review ID:</label>
+             <div class="col-md-9"><input class="form-control" type="text" id="reviewid" /></div>
+            </div>
+              
+            <div class="form-group"> 
+             <label class="control-label col-md-3" for="userid"> Enter User Id: </label>
+             <div class="col-md-9"><input class="form-control" type="text" id="userid" size="20"/></div>
+            </div>
+              
+            <div class="form-group"> 
+               <label class="control-label col-md-3" for="coffeescore"> Coffee Score: </label>
+               <div class="col-md-9"><input class="form-control" type="text" id="coffeescore" size="10"/></div>
+            </div>
+              
+            <div class="form-group">
+                <label class="control-label col-md-3" for="burritoscore">Burrito Score </label>
+                <div class="col-md-9"><input class="form-control" type="text" id="burritoscore" size="10"/></div>
+            </div>
+   
+            <div class="form-group">
+                <label class="control-label col-md-3" for="dollarscore">Dollar Score</label>
+                <div class="col-md-9"><input class="form-control" type="text" id="dollarscore" size="10"/></div>
+            </div>
+              
+            <div class="form-group">
+                <label class="control-label col-md-3" for="review">Review </label>
+                <div class="col-md-9"><input class="form-control" type="textbox" id="review" size="10"/></div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3" for="helpfulcount">Helpful Count: </label>
+                <div class="col-md-9"><input class="form-control" type="text" id="helpfulcount" size="10"/></div>
+            </div>
+              <div class="form-group">
+                <label class="control-label col-md-3" for="unhelpfulcount">Un-Helpful Count: </label>
+                <div class="col-md-9"><input class="form-control" type="text" id="unhelpfulcount" size="10"/></div>
+            </div>
+          </div>
+          </form>
+      </div>
+      
+  <div class="row test">
+  <div class="col-md-12"><br>
+    <h2>Shops</h2>
+    <hr>
+      <table class="table table-striped">
+          <thead><tr><th>Review Id</th><th>User Id</th><th>Burrito Score</th><th>Coffee Score</th><th>Dollar Score</th><th>Review</th><th>Helpful </th><th>Unhelpful</th></tr></thead>
+        <tbody id="mybody" class="table-body">
+        </tbody>
+      </table>
+  </div>
+</div>
+</div>
+</body>
+</html>

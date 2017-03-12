@@ -81,6 +81,23 @@ public class CoffeeShop {
     public void setMylongitude(String mylongitude) {
         this.mylongitude = mylongitude;
     }
+    
+    
+    public int getMyopenhours() {
+        return myopenhours;
+    }
+
+    public void setMyopenhours(int myopenhours) {
+        this.myopenhours = myopenhours;
+    }
+
+    public int getMyclosehours() {
+        return myclosehours;
+    }
+
+    public void setMyclosehours(int myclosehours) {
+        this.myclosehours = myclosehours;
+    }
   
   private String myshopname;
   private String mycity;
@@ -91,5 +108,7 @@ public class CoffeeShop {
   private int myshopId;
   private String mylatitude;
   private String mylongitude;
+  private int myopenhours;
+  private int myclosehours;
 
 }

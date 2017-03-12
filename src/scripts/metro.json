@@ -1,10 +1,12 @@
 {
-  "myshopname" : "A name",
-  "mycity" : "A city",
+  "myshopname" : "Curl Coffee",
+  "mycity" : "Curl City",
   "mystreet" : "A street",
   "mystate" : "WA",
   "myzip" : 99944,
   "myphone" : "555-555-5555",
+  "myopenhours" : 4000,
+  "myclosehours" : 5000,
   "mylatitude" : 10.8348488,
   "mylongitude" : 8.9999922
 }
