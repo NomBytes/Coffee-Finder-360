@@ -48,7 +48,7 @@
           padding-left: 20px;    
         }
     </style>
-    <title>User Editor</title>
+    <title>Creating an Account.</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>    
     <script language="javascript">
@@ -144,8 +144,8 @@
             else
             {
                 // Update an existing record
-                var userid = document.getElementById("userid");
-                var username = document.getElementById("name");
+                var userid = document.getElementById("username");
+                var username = document.getElementById("password");
                 var age = document.getElementById("age");
                 var user = { 'userid': userid.value,
                              'name': username.value,
@@ -275,25 +275,24 @@
   </head>
   <body  onload="">
    <div id="title">
-   User Editor - Sample Maven Web App
+   Create Account
    </div>
    <br>
    <table id="myform">
-   <tr>
-       <td>
-           <input type="button" value="Get User" onclick="" id="get-data"/>
-           <input type="button" value="New User" onclick="" id="new-user"/>
-           <input type="button" value="Save User" onclick="" id="save-user"/>
-           <input type="button" value="Delete User" onclick="" id="delete-user"/>
-       </td>        
-   </tr>
+   
    <tr>
        <td>Enter User Name :  </td>
-       <td><input type="text" id="name" size="20"/> </td>
+       <td><input type="text" id="username" size="20"/> </td>
    </tr>
    <tr>
        <td>Password : </td>
-       <td><input type="text" id="age" size="10"/> </td>
+       <td><input type="text" id="password" size="20"/> </td>
+   </tr>
+   <tr>
+       <td>
+           <input type="button" value="Create User" onclick="" id="get-data"/>
+           
+       </td>       
    </tr>
    </table>
    <br>

@@ -6,23 +6,70 @@ and open the template in the editor.
 -->
 <html>
     <head>
+         <style>
+        <!-- inline style sheet -->
+        #myform{
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-right: 20px;
+            padding-left: 20px;
+            font-family: sans-serif;
+        }
+        #mytable {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-right: 20px;
+            padding-left: 20px;
+            font-family: sans-serif;
+        }
+        div {
+            font-family: sans-serif;
+            font-size: xx-large;
+            font-weight: bold;
+        }
+        .table-header {
+          background-color: yellow;
+          border: 1px solid black;
+        }
+        .userid {
+          width: 60px;
+        }
+        .name {
+          width: 200px;
+        }
+        .password {
+          width: 20px;
+        }
+        th, td {
+          border: 1px solid black;
+          border-collapse: collapse;
+          padding-top: 5px;
+          padding-bottom: 5px;
+          padding-right: 20px;
+          padding-left: 20px;    
+        }
+    </style>
         <title>Reviews</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div><table id="myform">
-   <tr>
-       <td>
-           <input type="button" value="Get User" onclick="" id="get-data"/>
-          
-       </td>        
-   </tr>
-   <tr>
-       <td>Review :  </td>
-       <td><input type="text" id="name" size="20"/> </td>
-   </tr>
+        
    
-   </table></div>
+    <body>
+        <div id ="title">
+            Reviews
+        </div>
+        <br>
+        <table id = "myForm">
+            <tr>
+                <td>write review</td>
+            </tr>
+            <tr>
+                <td><input type ="text" id ="review" size ="30"/></td>
+            </tr>
+        </table>
     </body>
 </html>
