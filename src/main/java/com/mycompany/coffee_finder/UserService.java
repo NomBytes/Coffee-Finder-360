@@ -48,24 +48,25 @@ public class UserService {
      * @return an instance of java.lang.String
      */
     @GET
-    @Produces(MediaType.TEXT_HTML)
-    public String getUsers() {
-        //TODO return proper representation object
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<User> getUsers(@pathParam("userid") String userid) {
+        LinkedList<User> lusers = new LinkedList<User>();
         StringBuilder sb = new StringBuilder();
-        sb.append("<html><body><style>table, th, td {font-family:Arial,Verdana,sans-serif;font-size:16px;padding: 0px;border-spacing: 0px;}</style><b>USERS LIST:</b><br><br><table cellpadding=10 border=1><tr><td>Username</td><td>Email</td><td>Password</td><td>ID</td></tr>");
-        try
+        
+        try 
         {
-            UserModel db = UserModel.singleton();
-            User[] users = db.getUsers();
-            for (int i=0;i<users.length;i++)
-                sb.append("<tr><td>" + users[i].getUsername() + "</td><td>" + users[i].getEmail() + "</td><td>" + users[i].getPassword() + "</td><td>" + users[i].getUserId() + "</td></tr>");
+        	int uid = Integer.parseInt(userid);
+        	UserModel db = UserModel.singleton();
+        	User[] users = db.getUsers(uid);
+        	for (int i=0;i<users.length;i++) {
+        		lusers.add(users[i]);
+        	}
         }
         catch (Exception e)
         {
-            sb.append("</table><br>Error getting users: " + e.toString() + "<br>");
+        	sb.append("Error getting users: " + e.toString());
         }
-        sb.append("</table></body></html>");
-        return sb.toString();
+        return lusers;
     }
 
     /**
