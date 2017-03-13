@@ -85,7 +85,7 @@ public class ReviewService {
      * PUT method for updating or creating an instance of GenericResource
      * @param content representation for the resource
      */
- /*   @PUT
+    @PUT
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
     public String updateReview(String jobj) throws IOException
@@ -94,11 +94,11 @@ public class ReviewService {
         Review review = mapper.readValue(jobj.toString(), Review.class);
         StringBuilder text = new StringBuilder();
         try {
-            ReviewModel db = (ReviewModel)Model.singleton();
-            int userid = review.getUserId();
+            ReviewModel db = ReviewModel.singleton();
+            int reviewid = review.getReviewId();
             db.updateReview(review);
-            logger.log(Level.INFO, "update review with userid=" + userid);
-            text.append("User id updated with user id=" + userid + "\n");
+            logger.log(Level.INFO, "update review with userid=" + reviewid);
+            text.append("User id updated with user id=" + reviewid + "\n");
         }
         catch (SQLException sqle)
         {
@@ -113,8 +113,8 @@ public class ReviewService {
         }
         return text.toString();
     }
-*/
-/*   
+
+   
     @DELETE
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -124,15 +124,15 @@ public class ReviewService {
         Review review = mapper.readValue(jobj.toString(), Review.class);
         StringBuilder text = new StringBuilder();
         try {
-            Model db = Model.singleton();
-            int userid = review.getMyUserId();
-            db.deleteReview(userid);
-            logger.log(Level.INFO, "user deleted from db=" + userid);
-            text.append("User id deleted with id=" + userid);
+            ReviewModel db = ReviewModel.singleton();
+            int reviewid = review.getReviewId();
+            db.deleteReview(reviewid);
+            logger.log(Level.INFO, "review deleted from db=" + reviewid);
+            text.append("Review id deleted with id=" + reviewid);
         }
         catch (SQLException sqle)
         {
-            String errText = "Error deleteing user after db connection made:\n" + sqle.getMessage() + " --- " + sqle.getSQLState() + "\n";
+            String errText = "Error deleteing review after db connection made:\n" + sqle.getMessage() + " --- " + sqle.getSQLState() + "\n";
             logger.log(Level.SEVERE, errText);
             text.append(errText);
         }
@@ -142,12 +142,15 @@ public class ReviewService {
             text.append("Error connecting to db.");
         }
         return text.toString();
-    }*/
+    }
     
     @POST
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public String createReview(String jobj) throws IOException {
+    public List<Review> createReview(String jobj) throws IOException {
+        
+        LinkedList<Review> lreviews = new LinkedList<Review>();
+        
         ObjectMapper mapper = new ObjectMapper();
         Review review = mapper.readValue(jobj.toString(), Review.class);
         
@@ -155,9 +158,11 @@ public class ReviewService {
         StringBuilder text = new StringBuilder();
         try {
             ReviewModel db = ReviewModel.singleton();
-            int reviewid = db.newReview(review);
-            logger.log(Level.INFO, "review persisted to db as reviewid=" + reviewid);
-            text.append("Review id persisted with id=" + reviewid);
+            Review rev = db.newReview(review);
+            lreviews.add(rev);
+            logger.log(Level.INFO, "review persisted to db as reviewid=" + rev.getReviewId());
+            text.append("Review id persisted with id=" + rev.getReviewId());
+            
         }
         catch (SQLException sqle)
         {
@@ -171,6 +176,6 @@ public class ReviewService {
         }
         
         
-        return text.toString();
+        return lreviews;
     }
 }

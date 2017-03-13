@@ -14,6 +14,11 @@
             border-bottom: 2px dotted #ECECEC;
         }
         
+        #map1 {
+            width: 300;
+            height: 300;
+        }
+        
 </style>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> 
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -244,8 +249,14 @@
           newrow += "<td id=\"open\">" + shop.myopenhours + "</td>";
           newrow += "<td id=\"close\">" + shop.myclosehours + "</td>";
           newrow += "<td id=\"latitude\">" + shop.mylatitude + "</td>";
-          newrow += "<td id=\"longitude\">" + shop.mylongitude + "</td></tr>";
-          $('#mybody').append(newrow);
+          newrow += "<td id=\"longitude\">" + shop.mylongitude + "</td>";
+          newrow += "<td id=\"maps\"><button class=\"btn btn-primary\" type=\"button\" data-toggle=\"collapse\" data-target=\"#collapseExample"+ shop.myshopId + "\" aria-expanded=\"false\" aria-controls=\"collapseExample\">Directions</button>";
+          newrow += "<div class=\"collapse\" id=\"collapseExample"+ shop.myshopId + "\">";
+          newrow += "<iframe width=\"500\" height=\"450\" frameborder=\"0\" style=\"border:0\" src=\"https://www.google.com/maps/embed/v1/place?key=AIzaSyC7yDiukFj6gYsFTxp0mt9XNJlly3hZtpk&q="+ shop.mylatitude + ","+ shop.mylongitude + "\" allowfullscreen></iframe></div></td></tr>";
+        
+        
+        
+            $('#mybody').append(newrow);
       });
     }
     
@@ -405,7 +416,7 @@
     <h2>Shops</h2>
     <hr>
       <table class="table table-striped">
-          <thead><tr><th>Shop ID</th><th>Shop</th><th>Street</th><th>City</th><th>State</th><th>Zip</th><th>Phone</th><th>Opens</th><th>Closes</th><th>Latitude</th><th>Longitude</th></tr></thead>
+          <thead><tr><th>Shop ID</th><th>Shop</th><th>Street</th><th>City</th><th>State</th><th>Zip</th><th>Phone</th><th>Opens</th><th>Closes</th><th>Latitude</th><th>Longitude</th><th>Directions</th></tr></thead>
         <tbody id="mybody" class="table-body">
         </tbody>
       </table>

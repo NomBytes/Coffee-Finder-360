@@ -57,10 +57,9 @@
         $('#delete-review').click(function ()
         {
            var reviewid = document.getElementById("reviewid");
-           var reviewname = document.getElementById("name");
-           var review = { 'myreviewId': reviewid.value };           
+           var review = { 'reviewId': reviewid.value };           
            var url='tcss360/reviews/';
-           if (confirm('Are you sure - DELETE ' + reviewname.value + '-(' + reviewid.value + ') ?')) {
+           if (confirm('Are you sure - DELETE ' + reviewid.value + '-(' + reviewid.value + ') ?')) {
              $.ajax({
                type: 'DELETE',
                url: url,
@@ -110,11 +109,11 @@
                              'myBurritoScore' : burritoscore.value,
                              'myDollarScore' : dollarscore.value,
                              'myReview' : review.value,
-                             'myHelpfulcount' : helpfulcount.value,
-                             'myUnhelpfulcount' : unhelpfulcount.value
+                             'myHelpful' : helpfulcount.value,
+                             'myUnhelpful' : unhelpfulcount.value
                          };           
                 var url='tcss360/reviews/';
-                if (confirm('Are you sure - CREATE ' + reviewname.value + ' ?')) {
+                if (confirm('Are you sure - CREATE ' + ' the review?')) {
                   $.ajax({
                     type: 'POST',
                     url: url,
@@ -143,11 +142,11 @@
                              'myBurritoScore' : burritoscore.value,
                              'myDollarScore' : dollarscore.value,
                              'myReview' : review.value,
-                             'myHelpfulcount' : helpfulcount.value,
-                             'myUnhelpfulcount' : unhelpfulcount.value
+                             'myHelpful' : helpfulcount.value,
+                             'myUnhelpful' : unhelpfulcount.value
                          };          
                 var url='tcss360/reviews/';
-                if (confirm('Are you sure - UPDATE ' + reviewname.value + ' ?')) {
+                if (confirm('Are you sure - UPDATE ' + reviewid.value + ' ?')) {
                   $.ajax({
                     type: 'PUT',
                     url: url,
@@ -187,6 +186,21 @@
         // get and display reviews when the form is first loaded
         getreviews();
         
+        
+
+        // Clears the form to allow entry of a new review record
+        $('#clear-form').click(function ()
+        {
+           document.getElementById("reviewid").value = "";
+           document.getElementById("userid").value = "";
+           document.getElementById("coffeescore").value = "";
+           document.getElementById("burritoscore").value="";
+           document.getElementById("dollarscore").value="";
+           document.getElementById("review").value="";
+           document.getElementById("helpfulcount").value="";
+           document.getElementById("unhelpfulcount").value="";
+           return;
+        });
     } );
 
     // gets and displays reviews by calling render
@@ -216,18 +230,20 @@
         }); 
     }    
     
-    
+   
+        
+        
     // renders the review table
     function render(data)  {
       $.each(data, function(index, review) { 
           var newrow = "<tr><td id=\"reviewid\"" + index + "\">"+ review.reviewId + "</td>";
-          newrow += "<td id=\"userid\">" + review.myUserId + "</td>";
-          newrow += "<td id=\"coffeescore\">" + review.myCoffeeScore + "</td>";
-          newrow += "<td id=\"burritoscore\">" + review.myBurritoScore + "</td>";
-          newrow += "<td id=\"dollarscore\">" + review.myDollarScore + "</td>";
-          newrow += "<td id=\"review\">" + review.myReview + "</td>";
-          newrow += "<td id=\"helpfulcount\">" + review.myHelpfulcount + "</td>";
-          newrow += "<td id=\"unhelpfulcount\">" + review.myUnhelpfulcount + "</td></tr>";
+          newrow += "<td id=\"userid\">" + review.userId + "</td>";
+          newrow += "<td id=\"coffeescore\">" + review.coffeeScore + "</td>";
+          newrow += "<td id=\"burritoscore\">" + review.burritoScore + "</td>";
+          newrow += "<td id=\"dollarscore\">" + review.dollarScore + "</td>";
+          newrow += "<td id=\"review\">" + review.review + "</td>";
+          newrow += "<td id=\"helpfulcount\">" + review.numHelpful + "</td>";
+          newrow += "<td id=\"unhelpfulcount\">" + review.numUnhelpful + "</td></tr>";
           $('#mybody').append(newrow);
       });
     }
@@ -264,14 +280,14 @@
       var list = data;
       if (list)
         $.each(list, function(index, review) { 
-            $('#reviewid').val(review.myreviewId);
-            $('#userid').val(review.myreviewname);
-            $('#coffeescore').val(review.mystreet);
-            $('#burritorscore').val(review.mycity);
-            $('#dollarscore').val(review.mystate);
-            $('#review').val(review.myzip);
-            $('#helpfulcount').val(review.myphone);
-            $('#unhelpfulcount').val(review.myopenhours);
+            $('#reviewid').val(review.reviewId);
+            $('#userid').val(review.userId);
+            $('#coffeescore').val(review.coffeeScore);
+            $('#burritoscore').val(review.burritoScore);
+            $('#dollarscore').val(review.dollarScore);
+            $('#review').val(review.review);
+            $('#helpfulcount').val(review.numHelpful);
+            $('#unhelpfulcount').val(review.numUnhelpful);
         });
       else
       {
@@ -321,6 +337,7 @@
              <input type="button" class="btn btn-primary" value="New Review" onclick="" id="new-review"/>
              <input type="button" class="btn btn-primary" value="Save Review" onclick="" id="save-review"/>
              <input type="button" class="btn btn-primary" value="Delete Review" onclick="" id="delete-review"/>
+             <input type="button" class="btn btn-primary" value="Clear Form" onclick="" id="clear-form" />
             </div>
              
               <br />
@@ -352,7 +369,7 @@
               
             <div class="form-group">
                 <label class="control-label col-md-3" for="review">Review </label>
-                <div class="col-md-9"><input class="form-control" type="textbox" id="review" size="10"/></div>
+                <div class="col-md-9"><textarea class="form-control" id="review" rows="5"/></textarea></div>
             </div>
             <div class="form-group">
                 <label class="control-label col-md-3" for="helpfulcount">Helpful Count: </label>
