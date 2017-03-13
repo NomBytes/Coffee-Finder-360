@@ -78,6 +78,7 @@
         {
            document.getElementById("reviewid").disabled = true;
            document.getElementById("userid").value = "";
+           document.getElementById("shopid").value = "";
            document.getElementById("coffeescore").value = "";
            document.getElementById("burritoscore").value="";
            document.getElementById("dollarscore").value="";
@@ -96,6 +97,7 @@
             {
                 // Create a new record
                 var userid = document.getElementById("userid");
+                var shopid = document.getElementById("shopid");
                 var coffeescore = document.getElementById("coffeescore");
                 var burritoscore = document.getElementById("burritoscore");
                 var dollarscore = document.getElementById("dollarscore");
@@ -105,6 +107,7 @@
                 
                 var review = {
                              'myUserId': userid.value,
+                             'myShopId': shopid.value,
                              'myCoffeeScore' : coffeescore.value,
                              'myBurritoScore' : burritoscore.value,
                              'myDollarScore' : dollarscore.value,
@@ -129,6 +132,7 @@
                 // Update an existing record
                 var reviewid = document.getElementById("reviewid")
                 var userid = document.getElementById("userid");
+                var shopid = document.getElementById("shopid");
                 var coffeescore = document.getElementById("coffeescore");
                 var burritoscore = document.getElementById("burritoscore");
                 var dollarscore = document.getElementById("dollarscore");
@@ -138,6 +142,7 @@
                 
                 var review = { 'reviewId' : reviewid.value,
                              'myUserId': userid.value,
+                             'myShopId': shopid.value,
                              'myCoffeeScore' : coffeescore.value,
                              'myBurritoScore' : burritoscore.value,
                              'myDollarScore' : dollarscore.value,
@@ -193,6 +198,7 @@
         {
            document.getElementById("reviewid").value = "";
            document.getElementById("userid").value = "";
+           document.getElementById("shopid").value = "";
            document.getElementById("coffeescore").value = "";
            document.getElementById("burritoscore").value="";
            document.getElementById("dollarscore").value="";
@@ -283,6 +289,7 @@
         $.each(list, function(index, review) { 
             $('#reviewid').val(review.reviewId);
             $('#userid').val(review.userId);
+            $('#shopid').val(review.shopId);
             $('#coffeescore').val(review.coffeeScore);
             $('#burritoscore').val(review.burritoScore);
             $('#dollarscore').val(review.dollarScore);
@@ -294,6 +301,7 @@
       {
            document.getElementById("reviewid").value = "";
            document.getElementById("userid").value = "";
+           document.getElementById("shopid").value = "";
            document.getElementById("coffeescore").value="";
            document.getElementById("burritoscore").value="";
            document.getElementById("dollarscore").value="";
@@ -354,6 +362,11 @@
             </div>
               
             <div class="form-group"> 
+             <label class="control-label col-md-3" for="shopid"> Enter Shop Id: </label>
+             <div class="col-md-9"><input class="form-control" type="text" id="shopid" size="20"/></div>
+            </div>
+              
+            <div class="form-group"> 
                <label class="control-label col-md-3" for="coffeescore"> Coffee Score: </label>
                <div class="col-md-9"><input class="form-control" type="text" id="coffeescore" size="10"/></div>
             </div>
@@ -389,7 +402,7 @@
     <h2>Shops</h2>
     <hr>
       <table class="table table-striped">
-          <thead><tr><th>Review Id</th><th>User Id</th><th>Burrito Score</th><th>Coffee Score</th><th>Dollar Score</th><th>Review</th><th>Helpful </th><th>Unhelpful</th></tr></thead>
+          <thead><tr><th>Review Id</th><th>Shop ID</th><th>User Id</th><th>Burrito Score</th><th>Coffee Score</th><th>Dollar Score</th><th>Review</th><th>Helpful </th><th>Unhelpful</th></tr></thead>
         <tbody id="mybody" class="table-body">
         </tbody>
       </table>
