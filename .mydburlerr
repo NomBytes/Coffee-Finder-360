@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-Running echo $JDBC_DATABASE_URL on safe-sea-61961... starting, run.5850 (Free)
-Running echo $JDBC_DATABASE_URL on safe-sea-61961... connecting, run.5850 (Free)
-Running echo $JDBC_DATABASE_URL on safe-sea-61961... up, run.5850 (Free)
-=======
-Running echo $JDBC_DATABASE_URL on coffee-shop360... starting, run.2535 (Free)
-Running echo $JDBC_DATABASE_URL on coffee-shop360... connecting, run.2535 (Free)
-Running echo $JDBC_DATABASE_URL on coffee-shop360... up, run.2535 (Free)
->>>>>>> 4c62bc64ba10ef9b9b8727c03d30089cbc14a3f8
+Running echo $JDBC_DATABASE_URL on safe-sea-61961... starting, run.3850 (Free)
+Running echo $JDBC_DATABASE_URL on safe-sea-61961... connecting, run.3850 (Free)
+Running echo $JDBC_DATABASE_URL on safe-sea-61961... up, run.3850 (Free)
