@@ -27,7 +27,7 @@ public class UserModel extends Model{
         }
         return (UserModel)instance;
   }
-  public int newUser(User usr) throws SQLException
+  public User newUser(User usr) throws SQLException
   {
       String sqlInsert="insert into users (username, email, password) values ('" + usr.getUsername() + "'" + ", '" + usr.getEmail() + "', '" + usr.getPassword() + "');";
       Statement s = createStatement();
@@ -40,7 +40,8 @@ public class UserModel extends Model{
       while (rs.next())
           userid = rs.getInt(1);   // assuming 4th column is userid
       logger.log(Level.INFO, "The new user id=" + userid);
-      return userid;
+      usr.setUserId(userid);
+      return usr;
   }
 
   public void deleteUser(int userid) throws SQLException
@@ -51,10 +52,12 @@ public class UserModel extends Model{
       pst.execute();
   }
 
-  public User[] getUsers() throws SQLException
+  public User[] getUsers(int uid) throws SQLException
   {
       LinkedList<User> ll = new LinkedList<User>();
-      String sqlQuery ="select * from users;";
+      String sqlQuery ="select * from users";
+      sqlQuery += (uid > 0) ? " where userid=" + uid + " order by userid;" : " order by userid;";
+      
       Statement st = createStatement();
       ResultSet rows = st.executeQuery(sqlQuery);
       while (rows.next())

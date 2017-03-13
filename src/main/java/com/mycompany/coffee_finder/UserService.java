@@ -17,10 +17,13 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
+import javax.ws.rs.PathParam;
 import objects.User;
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -48,8 +51,9 @@ public class UserService {
      * @return an instance of java.lang.String
      */
     @GET
+    @Path("{userid}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<User> getUsers(@pathParam("userid") String userid) {
+    public List<User> getUsers(@PathParam("userid") String userid) {
         LinkedList<User> lusers = new LinkedList<User>();
         StringBuilder sb = new StringBuilder();
         
@@ -132,9 +136,10 @@ public class UserService {
     }
     
     @POST
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public String createUser(String jobj) throws IOException {
+    public List<User> createUser(String jobj) throws IOException {
+        LinkedList<User> lusers = new LinkedList<User>();
         ObjectMapper mapper = new ObjectMapper();
         User user = mapper.readValue(jobj.toString(), User.class);
         
@@ -150,9 +155,10 @@ public class UserService {
         */
         try {
             UserModel db = UserModel.singleton();
-            int userid = db.newUser(user);
-            logger.log(Level.INFO, "user persisted to db as userid=" + userid);
-            text.append("User id persisted with id=" + userid);
+            User usr = db.newUser(user);
+            logger.log(Level.INFO, "user persisted to db as userid=" + usr );
+            text.append("User id persisted with id=" + usr);
+            lusers.add(usr);
         }
         catch (SQLException sqle)
         {
@@ -166,7 +172,7 @@ public class UserService {
         }
         
         
-        return text.toString();
+        return lusers;
     }
 }
 
