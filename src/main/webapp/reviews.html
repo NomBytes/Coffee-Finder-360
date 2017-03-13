@@ -238,6 +238,7 @@
       $.each(data, function(index, review) { 
           var newrow = "<tr><td id=\"reviewid\"" + index + "\">"+ review.reviewId + "</td>";
           newrow += "<td id=\"userid\">" + review.userId + "</td>";
+          newrow += "<td id=\"shopid\">" + review.shopId + "</td>";
           newrow += "<td id=\"coffeescore\">" + review.coffeeScore + "</td>";
           newrow += "<td id=\"burritoscore\">" + review.burritoScore + "</td>";
           newrow += "<td id=\"dollarscore\">" + review.dollarScore + "</td>";
