@@ -1,57 +1,23 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-  <head>
-    <style>
-        <!-- inline style sheet -->
-        #myform{
-            border: 1px solid black;
-            border-collapse: collapse;
-            padding-top: 5px;
-            padding-bottom: 5px;
-            padding-right: 20px;
-            padding-left: 20px;
-            font-family: sans-serif;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Coffee Finder</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<style>
+	body {
+		padding-top: 100px;
+	}
+        
+        .form {
+            border-bottom: 2px dotted #ECECEC;
         }
-        #mytable {
-            border: 1px solid black;
-            border-collapse: collapse;
-            padding-top: 5px;
-            padding-bottom: 5px;
-            padding-right: 20px;
-            padding-left: 20px;
-            font-family: sans-serif;
-        }
-        div {
-            font-family: sans-serif;
-            font-size: xx-large;
-            font-weight: bold;
-        }
-        .table-header {
-          background-color: yellow;
-          border: 1px solid black;
-        }
-        .userid {
-          width: 60px;
-        }
-        .name {
-          width: 200px;
-        }
-        .password {
-          width: 20px;
-        }
-        th, td {
-          border: 1px solid black;
-          border-collapse: collapse;
-          padding-top: 5px;
-          padding-bottom: 5px;
-          padding-right: 20px;
-          padding-left: 20px;    
-        }
-    </style>
-    <title>Creating an Account.</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>    
-    <script language="javascript">
+        
+</style>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> 
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+     <script language="javascript">
     $(document).ready(function () { 
         var old_userid = document.getElementById("userid").value;
         
@@ -91,7 +57,7 @@
         $('#delete-user').click(function ()
         {
            var userid = document.getElementById("userid");
-           var username = document.getElementById("name");
+           var username = document.getElementById("username");
            var user = { 'userid': userid.value };           
            var url='tcss360/users/';
            if (confirm('Are you sure - DELETE ' + username.value + '-(' + userid.value + ') ?')) {
@@ -112,10 +78,41 @@
         $('#new-user').click(function ()
         {
            document.getElementById("userid").disabled = true;
-           document.getElementById("name").value = "";
+           document.getElementById("username").value = "";
            document.getElementById("age").value = "";
         });        
-
+        // New-message Click function
+        //
+        // Clears the form to allow entry of a new message record
+        $('#new-message').click(function ()
+        {
+           document.getElementById("messageId").disabled = true;
+           document.getElementById("message").value = "";
+         
+        });
+        //saves the message
+        $('#save-message').click(function ()
+        {
+            if(document.getElementById("messageId").disabled)
+            {
+                var text = document.getElementById("message");
+                var message = {
+                    'message' : text.value
+                };
+                var url='tcss360/messages/';
+                if (confirm('Are you sure - CREATE ' + text.value + ' ?')) {
+                  $.ajax({
+                    type: 'POST',
+                    url: url,
+                    datatype: 'json',
+                    data: JSON.stringify(messages),
+                    contentType: 'application/json',
+                    success: render_newmessage
+                  }); 
+                }    
+                
+            }
+        });
         // Save-User Click function
         //
         // If a new user, calls the POST to create a new user
@@ -125,10 +122,10 @@
             if (document.getElementById("userid").disabled)
             {
                 // Create a new record
-                var username = document.getElementById("name");
-                var age = document.getElementById("age");
-                var user = { 'name': username.value,
-                             'age': age.value };           
+                var username = document.getElementById("username");
+                var email = document.getElementById("email");
+                var user = { 'username': username.value,
+                             'email': email.value };           
                 var url='tcss360/users/';
                 if (confirm('Are you sure - CREATE ' + username.value + ' ?')) {
                   $.ajax({
@@ -144,12 +141,12 @@
             else
             {
                 // Update an existing record
-                var userid = document.getElementById("username");
-                var username = document.getElementById("password");
-                var age = document.getElementById("age");
+                var userid = document.getElementById("userid");
+                var username = document.getElementById("username");
+                var email = document.getElementById("email");
                 var user = { 'userid': userid.value,
-                             'name': username.value,
-                             'age': age.value };           
+                             'username': username.value,
+                             'email': email.value };           
                 var url='tcss360/users/';
                 if (confirm('Are you sure - UPDATE ' + username.value + ' ?')) {
                   $.ajax({
@@ -224,8 +221,8 @@
     function render(data)  {
       $.each(data, function(index, user) { 
           var newrow = "<tr><td id=\"userid\"" + index + "\">"+ user.userid + "</td>";
-          newrow += "<td id=\"name\">" + user.name + "</td>";
-          newrow += "<td id=\"age\">" + user.age + "</td></tr>";
+          newrow += "<td id=\"username\">" + user.username + "</td>";
+          newrow += "<td id=\"email\">" + user.email + "</td></tr>";
           $('#mybody').append(newrow);
       });
     }
@@ -262,49 +259,95 @@
       if (list)
         $.each(list, function(index, user) { 
             $('#userid').val(user.userid);
-            $('#name').val(user.name);
-            $('#age').val(user.age);
+            $('#username').val(user.username);
+            $('#email').val(user.email);
         });
       else
       {
-        document.getElementById("name").value = "";
-        document.getElementById("age").value = "";
+        document.getElementById("username").value = "";
+        document.getElementById("email").value = "";
       }
-    }    
+    } 
+   /* function myFunction() {
+            var m  = document.getElementById("message-data").submit();
+            document.getElementById("sent").innerHTML = m.value;
+
+
+    }*/
   </script>
   </head>
-  <body  onload="">
-   <div id="title">
-   Create Account
-   </div>
-   <br>
-   <table id="myform">
+  <body id="thePage" data-target=".navbar" data-offset="50" onload="">
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+         <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#"><span>Coffee Finder</span></a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="reviews.html">Shops</a></li>
+         <li><a href="users.html">Users</a></li>
+        <li><a href="reviews.html">Reviews </a></li>
+       </ul>
+    </div>
+  </div>
+</nav>
+      
+      
    
-   <tr>
-       <td>Enter User Name :  </td>
-       <td><input type="text" id="username" size="20"/> </td>
-   </tr>
-   <tr>
-       <td>Password : </td>
-       <td><input type="text" id="password" size="20"/> </td>
-   </tr>
-   <tr>
-       <td>
-           <input type="button" value="Create User" onclick="" id="get-data"/>
+
+      
+  <div id="reviews" class="container text-large">
+      <div class="row test">
+          <form class="form-horizontal">
+          <div class="col-md-7 form">
+            <div class="row">
+             <input type="button" class="btn btn-primary" value="Get User" onclick="" id="get-user"/>
+             <input type="button" class="btn btn-primary" value="New User" onclick="" id="new-user"/>
+             <input type="button" class="btn btn-primary" value="Save User" onclick="" id="save-user"/>
+             <input type="button" class="btn btn-primary" value="Delete User" onclick="" id="delete-user"/>
+            </div>
+             
+              <br />
+              <br />
+            <div class="form-group">  
+             <label class="control-label col-md-3" for="userid">UseId:</label>
+             <div class="col-md-9"><input class="form-control" type="text" id="userid" /></div>
+            </div>
+            <div class="form-group">  
+             <label class="control-label col-md-3" for="username">Username:</label>
+             <div class="col-md-9"><input class="form-control" type="text" id="username" /></div>
+            </div>
+              
+            <div class="form-group"> 
+             <label class="control-label col-md-3" for="password"> Password: </label>
+             <div class="col-md-9"><input class="form-control" type="text" id="password" size="20"/></div>
+            </div>
+              
+            <div class="form-group"> 
+               <label class="control-label col-md-3" for="email"> Email: </label>
+               <div class="col-md-9"><input class="form-control" type="text" id="email" size="10"/></div>
+            </div>
+              
            
-       </td>       
-   </tr>
-   </table>
-   <br>
-   <table id="mytable" class="table">
-           <thead>
-             <tr class="table-header">
-                 <td class="name">UserName</td>
-                 <td class="password">password</td>
-             </tr>               
-           </thead>
-           <tbody id="mybody" class="table-body">
-           </tbody>
-   </table>
-  </body>
-</html>
+          </div>
+          </form>
+      </div>
+      
+  <div class="row test">
+  <div class="col-md-12"><br>
+    <h2>Shops</h2>
+    <hr>
+      <table class="table table-striped">
+          <thead><tr><th>User Id</th><th>User Name</th><th>email</th></tr></thead>
+        <tbody id="mybody" class="table-body">
+        </tbody>
+      </table>
+  </div>
+</div>
+</div>
+</body>
