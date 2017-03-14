@@ -58,7 +58,7 @@
         {
            var userid = document.getElementById("userid");
            var username = document.getElementById("username");
-           var user = { 'userid': userid.value };           
+           var user = { 'userId': userid.value };           
            var url='tcss360/users/';
            if (confirm('Are you sure - DELETE ' + username.value + '-(' + userid.value + ') ?')) {
              $.ajax({
@@ -79,40 +79,11 @@
         {
            document.getElementById("userid").disabled = true;
            document.getElementById("username").value = "";
-           document.getElementById("age").value = "";
+           document.getElementById("email").value = "";
+           document.getElementById("password").value = "";
         });        
-        // New-message Click function
-        //
-        // Clears the form to allow entry of a new message record
-        $('#new-message').click(function ()
-        {
-           document.getElementById("messageId").disabled = true;
-           document.getElementById("message").value = "";
-         
-        });
-        //saves the message
-        $('#save-message').click(function ()
-        {
-            if(document.getElementById("messageId").disabled)
-            {
-                var text = document.getElementById("message");
-                var message = {
-                    'message' : text.value
-                };
-                var url='tcss360/messages/';
-                if (confirm('Are you sure - CREATE ' + text.value + ' ?')) {
-                  $.ajax({
-                    type: 'POST',
-                    url: url,
-                    datatype: 'json',
-                    data: JSON.stringify(messages),
-                    contentType: 'application/json',
-                    success: render_newmessage
-                  }); 
-                }    
-                
-            }
-        });
+
+  
         // Save-User Click function
         //
         // If a new user, calls the POST to create a new user
@@ -124,8 +95,10 @@
                 // Create a new record
                 var username = document.getElementById("username");
                 var email = document.getElementById("email");
+                var password = document.getElementById("password");
                 var user = { 'username': username.value,
-                             'email': email.value };           
+                             'email': email.value,
+                             'password' : password.value};           
                 var url='tcss360/users/';
                 if (confirm('Are you sure - CREATE ' + username.value + ' ?')) {
                   $.ajax({
@@ -144,9 +117,11 @@
                 var userid = document.getElementById("userid");
                 var username = document.getElementById("username");
                 var email = document.getElementById("email");
-                var user = { 'userid': userid.value,
+                var password = document.getElementById("password");
+                var user = { 'userId': userid.value,
                              'username': username.value,
-                             'email': email.value };           
+                             'email': email.value,
+                             'password' : password.value};           
                 var url='tcss360/users/';
                 if (confirm('Are you sure - UPDATE ' + username.value + ' ?')) {
                   $.ajax({
@@ -220,9 +195,10 @@
     // renders the user table
     function render(data)  {
       $.each(data, function(index, user) { 
-          var newrow = "<tr><td id=\"userid\"" + index + "\">"+ user.userid + "</td>";
-          newrow += "<td id=\"username\">" + user.username + "</td>";
-          newrow += "<td id=\"email\">" + user.email + "</td></tr>";
+          var newrow = "<tr><td class=\"userid\"" + index + "\">"+ user.userId + "</td>";
+          newrow += "<td class=\"username\">" + user.username + "</td>";
+          newrow += "<td class=\"email\">" + user.email + "</td>";
+          newrow += "<td class=\"password\">" + user.password + "</tr>";
           $('#mybody').append(newrow);
       });
     }
@@ -258,14 +234,16 @@
       var list = data;
       if (list)
         $.each(list, function(index, user) { 
-            $('#userid').val(user.userid);
+            $('#userid').val(user.userId);
             $('#username').val(user.username);
             $('#email').val(user.email);
+            $('#password').val(user.password);
         });
       else
       {
         document.getElementById("username").value = "";
         document.getElementById("email").value = "";
+        document.getElementById("password").value = "";
       }
     } 
    /* function myFunction() {
@@ -285,11 +263,11 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#"><span>Coffee Finder</span></a>
+      <a class="navbar-brand" href="index.html"><span>Coffee Finder</span></a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="reviews.html">Shops</a></li>
+        <li><a href="index.html">Shops</a></li>
          <li><a href="users.html">Users</a></li>
         <li><a href="reviews.html">Reviews </a></li>
        </ul>
@@ -315,7 +293,7 @@
               <br />
               <br />
             <div class="form-group">  
-             <label class="control-label col-md-3" for="userid">UseId:</label>
+             <label class="control-label col-md-3" for="userid">UserId:</label>
              <div class="col-md-9"><input class="form-control" type="text" id="userid" /></div>
             </div>
             <div class="form-group">  

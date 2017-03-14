@@ -207,6 +207,24 @@
         // get and display shops when the form is first loaded
         getshops();
         
+        
+        // Clears the form to allow entry of a new review record
+        $('#clear-form').click(function ()
+        {
+           document.getElementById("shopid").value = "";
+           document.getElementById("name").value = "";
+           document.getElementById("street").value = "";
+           document.getElementById("city").value="";
+           document.getElementById("state").value="";
+           document.getElementById("zip").value="";
+           document.getElementById("phone").value="";
+           document.getElementById("openhours").value="";
+           document.getElementById("closehours").value="";
+           document.getElementById("latitude").value="";
+           document.getElementById("longitude").value="";
+           return;
+        });
+        
     } );
 
     // gets and displays shops by calling render
@@ -332,9 +350,9 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="shops.html">Shops</a></li>
+         <li><a href="index.html">Shops</a></li>
          <li><a href="users.html">Users</a></li>
-        <li><a href="reviews.html">Reviews </a></li>
+         <li><a href="reviews.html">Reviews </a></li>
        </ul>
     </div>
   </div>
@@ -353,6 +371,7 @@
              <input type="button" class="btn btn-primary" value="New Shop" onclick="" id="new-shop"/>
              <input type="button" class="btn btn-primary" value="Save Shop" onclick="" id="save-shop"/>
              <input type="button" class="btn btn-primary" value="Delete Shop" onclick="" id="delete-shop"/>
+             <input type="button" class="btn btn-primary" value="Clear Form" onclick="" id="clear-form"/>
             </div>
              
               <br />
