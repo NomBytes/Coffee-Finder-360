@@ -278,6 +278,19 @@
       });
     }
     
+    $('#clear-form').click(function()
+    {
+    	document.getElementById("shopid").value = "";
+    	document.getElementById("name").value = "";
+        document.getElementById("street").value = "";
+        document.getElementById("city").value="";
+        document.getElementById("state").value="";
+        document.getElementById("zip").value="";
+        document.getElementById("phone").value="";
+        document.getElementById("openhours").value="";
+        document.getElementById("closehours").value="";
+        document.getElementById("latitude").value="";
+        document.getElementById("longitude").value="";
     // clears the table, reloads the shops
     function render_clear(data)
     {
